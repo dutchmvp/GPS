@@ -3,7 +3,7 @@
   "occupant" : "Mrs Granny Smith",
   "latLong" : ["53.555862", "-2.507091"],
   "floors" : [{
-    "desc" : "ground-floor",
+    "desc" : "Ground-floor",
     "rooms" : [{
       "id" : "ydhsjfhsdkf",
       "desc": "Lounge",
@@ -14,7 +14,7 @@
       "beaconId" : "blah2"
     }]
     }, {
-    "desc" : "first-floor",
+    "desc" : "First-floor",
     "rooms" :  [{
       "id" : "dsfhsdkf",
       "desc": "Bathroom",

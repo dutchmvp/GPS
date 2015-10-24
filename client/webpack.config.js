@@ -26,10 +26,10 @@ module.exports = {
         }, {
             test: /\.scss$|\.css$/,
             exclude : /global\.scss$/,
-            loader: ExtractTextPlugin.extract("style-loader", "styles-loader?modules!sass")
+            loader: ExtractTextPlugin.extract("style-loader", "css-loader?modules!sass")
         }, {
             test: /global\.scss$/,
-            loader: ExtractTextPlugin.extract("style-loader", "styles-loader?sass")
+            loader: ExtractTextPlugin.extract("style-loader", "css-loader?sass")
         }, {
             test: /\.(png|woff|woff2|eot|ttf|svg|json)$/,
             loader: "url-loader?limit=100000"
@@ -39,6 +39,6 @@ module.exports = {
     plugins:[
         new HtmlWebpackPlugin({ template: "./src/home-tracker.html", filename : "home-tracker.html", excludeChunks : ["VolunteerPortalApp"]}),
         new HtmlWebpackPlugin({ template: "./src/volunteer-portal.html", filename : "volunteer-portal.html", excludeChunks : ["HomeTrackerApp"]}),
-        new ExtractTextPlugin("./styles/[name].styles", { allChunks : true })
+        new ExtractTextPlugin("./styles/[name].css", { allChunks : true })
     ]
 };
