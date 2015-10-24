@@ -1,33 +1,28 @@
-import React from 'react';
+import React from 'react';  
+import Router from 'react-router';  
+import { DefaultRoute, Route } from 'react-router';
 
-// components
-import Header from './volunteer-portal/Header.jsx';
-import RegisterLogin from './volunteer-portal/RegisterLogin.jsx';
-import Dashboard from './volunteer-portal/Dashboard.jsx';
+// applications
+import App from './VolunteerPortal/App';
 
-class VolunteerPortalApp extends React.Component {
-	constructor() {
-		super(...arguments);
+// pages
+import Dashboard from './VolunteerPortal/Dashboard';
+import Details from './VolunteerPortal/Dashboard/Details';
+import Alerts from './VolunteerPortal/Dashboard/Alerts';
 
-		this.state = {
-			loggedIn: false
-		};
-	}
+import Register from './VolunteerPortal/RegisterLogin/Register';
+import Login from './VolunteerPortal/RegisterLogin/Login';
 
-	render() {
-		let userStatus = <RegisterLogin />;
+let routes = (
+	<Route name="app" path="/" handler={App}>
+		<DefaultRoute handler={Dashboard} />
+		<Route name="login" path="/login" handler={Login} />
+		<Route name="register" path="/register" handler={Register} />
+		<Route name="details" path="/details" handler={Details}/>
+		<Route name="alerts" path="/alerts" handler={Alerts}/>
+	</Route>
+);
 
-		if (this.state.loggedIn) {
-			userStatus = <Dashboard />;
-		}
-
-		return(
-			<div>
-				<Header isLoggedIn={this.state.loggedIn} />
-				{userStatus}
-			</div>
-		);
-	}
-}
-
-React.render(<VolunteerPortalApp />, document.body);
+Router.run(routes, function (Handler) {  
+	React.render(<Handler/>, document.body);
+});
