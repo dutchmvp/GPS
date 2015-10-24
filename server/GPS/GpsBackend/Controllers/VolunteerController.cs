@@ -34,7 +34,7 @@ namespace GpsBackend.Controllers
             var volunteer = new Volunteer
             {
                 FirstName = register.FirstName,
-                LasttName = register.LasttName,
+                LastName = register.LastName,
                 Mobile = register.Mobile,
                 Email = register.Email,
                 PostCode = register.PostCode,
