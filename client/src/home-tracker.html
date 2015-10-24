@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Tracker App</title>
+    <link rel="stylesheet" href="styles/bootstrap.min.css"/>
+</head>
+<body>
+
+    <script src="/socket.io/socket.io.js"></script>
+    {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
+        <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
+    {% } %}
+</body>
+</html>
