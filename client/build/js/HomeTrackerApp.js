@@ -64,7 +64,7 @@
 
 	var _HomeTrackerHomeTrackerInfo2 = _interopRequireDefault(_HomeTrackerHomeTrackerInfo);
 
-	var _utilsGetHomeConfig = __webpack_require__(222);
+	var _utilsGetHomeConfig = __webpack_require__(223);
 
 	var HomeTrackerApp = (function (_React$Component) {
 	    _inherits(HomeTrackerApp, _React$Component);
@@ -20526,6 +20526,8 @@
 
 	var _infoStyles2 = _interopRequireDefault(_infoStyles);
 
+	__webpack_require__(222);
+
 	var HomeTrackerInfo = (function (_React$Component) {
 	    _inherits(HomeTrackerInfo, _React$Component);
 
@@ -20564,7 +20566,7 @@
 	            }).reduce(function (a, b) {
 	                return a.length + b.length;
 	            });
-	            var housePlan = this.makeHousePlan();
+	            var housePlan = this.createHousePlan();
 	            return _react2["default"].createElement(
 	                "div",
 	                null,
@@ -20619,12 +20621,19 @@
 	                    ),
 	                    " ",
 	                    this.state.beatsPerMinute || "awaiting data"
-	                )
+	                ),
+	                _react2["default"].createElement("hr", null),
+	                _react2["default"].createElement(
+	                    "h2",
+	                    null,
+	                    "Floor Select"
+	                ),
+	                this.createFloorSelectButtons()
 	            );
 	        }
 	    }, {
-	        key: "makeHousePlan",
-	        value: function makeHousePlan() {
+	        key: "createHousePlan",
+	        value: function createHousePlan() {
 	            var floors = this.state.houseConfig.floors;
 	            return floors.map(function (floor, i) {
 	                var rooms = floor.rooms.map(function (room, j) {
@@ -20647,6 +20656,37 @@
 	                    rooms
 	                );
 	            });
+	        }
+	    }, {
+	        key: "createFloorSelectButtons",
+	        value: function createFloorSelectButtons() {
+	            var _this2 = this;
+
+	            return this.state.houseConfig.floors.map(function (floor, i) {
+	                var selected = i === 0 ? "floor-selected" : "";
+	                return _react2["default"].createElement(
+	                    "div",
+	                    {
+	                        "data-floor": i,
+	                        styleName: "floor-select-btn",
+	                        className: selected,
+	                        onClick: _this2.onFloorSelectButtonClick },
+	                    _react2["default"].createElement(
+	                        "p",
+	                        null,
+	                        i + 1
+	                    )
+	                );
+	            }).reverse();
+	        }
+	    }, {
+	        key: "onFloorSelectButtonClick",
+	        value: function onFloorSelectButtonClick(evt) {
+	            var target = evt.target;
+	            if (target.tagName === "P") {
+	                target = target.parentNode;
+	            }
+	            console.log(target.getAttribute("data-floor"));
 	        }
 	    }, {
 	        key: "render",
@@ -23353,10 +23393,16 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"floorName":"_2EotZRbCRIBHuOFU-6Rf8w","roomName":"_3NCduS4qzUoKsRLKyigYrm"};
+	module.exports = {"floorName":"_2EotZRbCRIBHuOFU-6Rf8w","roomName":"_3NCduS4qzUoKsRLKyigYrm","floor-select-btn":"_2p9shh0HToJCzrFAw3SgBS"};
 
 /***/ },
 /* 222 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 223 */
 /***/ function(module, exports) {
 
 	'use strict';

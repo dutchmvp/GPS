@@ -1,0 +1,7 @@
+.floor-selected {
+  transition: background-color 1s ease;
+  background-color: greenyellow;
+  &:hover {
+  background-color: darken(greenyellow, 20%) !important;
+  }
+}

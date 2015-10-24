@@ -1,2 +1,13 @@
 .floorName { font-weight: bold }
 .roomName { margin-left: 20px }
+.floor-select-btn {
+  width: 50px;
+  height: 50px;
+  padding: 20px;
+  background-color: #ededed;
+  cursor: pointer;
+  transition: background-color 1s ease;
+  &:hover {
+    background-color: darken(#ededed, 20%);
+  }
+}
