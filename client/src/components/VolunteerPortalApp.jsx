@@ -7,7 +7,7 @@ import Dashboard from './volunteer-portal/Dashboard.jsx';
 
 class VolunteerPortalApp extends React.Component {
 	constructor() {
-		super();
+		super(...arguments);
 
 		this.state = {
 			loggedIn: false
@@ -15,7 +15,7 @@ class VolunteerPortalApp extends React.Component {
 	}
 
 	render() {
-		var userStatus = <RegisterLogin />;
+		let userStatus = <RegisterLogin />;
 
 		if (this.state.loggedIn) {
 			userStatus = <Dashboard />;
@@ -23,11 +23,8 @@ class VolunteerPortalApp extends React.Component {
 
 		return(
 			<div>
-				<Header />
-				
-				<div className="container">
-					{userStatus}
-				</div>
+				<Header isLoggedIn={this.state.loggedIn} />
+				{userStatus}
 			</div>
 		);
 	}
