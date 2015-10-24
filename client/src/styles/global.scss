@@ -1,9 +1,6 @@
 .floor-selected {
   transition: background-color 1s ease;
-  background-color: greenyellow;
-  &:hover {
-  background-color: darken(greenyellow, 20%) !important;
-  }
+  background-color: #818181;
 }
 
 .footer {
@@ -12,4 +9,8 @@
 
 p.event {
 	text-align: right;
+}
+
+.current-room > div {
+  background-color: rgba(0,0,255, .25);
 }

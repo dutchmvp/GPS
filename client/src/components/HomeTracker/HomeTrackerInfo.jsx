@@ -2,25 +2,39 @@ import React from "react";
 import CSSModule from "react-css-modules";
 import styles from "./info-styles";
 import "../../styles/global";
+import HomeTrackerStore from "../../store/Store";
+import { selectedFloor } from "../../actions/home-tracker-actions";
 
 class HomeTrackerInfo extends React.Component {
 
     constructor(props){
         super(props);
+        let location;
+        if(Object.keys(this.props.houseConfig).length){
+            let current = HomeTrackerStore.getState().currentLocation;
+            location = this.props.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
+        }
+        else {
+            location = null;
+        }
+
         this.state = {
             houseConfig : this.props.houseConfig,
             hasLoaded : false,
-            occupantLocation : null,
+            occupantLocation : location,
             beatsPerMinute : null
         }
     }
 
     componentWillReceiveProps(nextProps){
         if(Object.keys(nextProps.houseConfig).length) {
+            let current = HomeTrackerStore.getState().currentLocation;
+            let location = nextProps.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
             setTimeout(()=> {
                 this.setState({
                     hasLoaded : true,
-                    houseConfig :nextProps.houseConfig
+                    houseConfig :nextProps.houseConfig,
+                    occupantLocation : location
                 });
             }, 500);
         }
@@ -76,19 +90,11 @@ class HomeTrackerInfo extends React.Component {
                     data-floor={i}
                     styleName="floor-select-btn"
                     className={selected}
-                    onClick={this.onFloorSelectButtonClick}>
+                    onClick={HomeTrackerInfo.onFloorSelectButtonClick}>
                         <p>{i+1}</p>
                 </div>
             );
         }).reverse();
-    }
-
-    onFloorSelectButtonClick(evt) {
-        let target = evt.target;
-        if(target.tagName === "P") {
-            target = target.parentNode;
-        }
-        console.log(target.getAttribute("data-floor"));
     }
 
     render() {
@@ -105,6 +111,21 @@ class HomeTrackerInfo extends React.Component {
 
 HomeTrackerInfo.getAwaitingDataMsg = function(){
     return (<p>Awaiting data please wait...</p>);
+};
+
+HomeTrackerInfo.onFloorSelectButtonClick = function(evt) {
+    let target = evt.target;
+    if(target.tagName === "P") {
+        target = target.parentNode;
+    }
+    if(!target.classList.contains("floor-selected")) {
+        let current = document.querySelector(".floor-selected");
+        if(current) {
+            current.classList.remove("floor-selected");
+        }
+        target.classList.add("floor-selected");
+    }
+    HomeTrackerStore.dispatch(selectedFloor(target.getAttribute("data-floor")));
 };
 
 export default CSSModule(HomeTrackerInfo, styles);

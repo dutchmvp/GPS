@@ -1,6 +1,7 @@
 import React from "react";
 import CSSModule from "react-css-modules";
 import styles from "./hometracker-styles";
+import HomeTrackerStore from "../../store/Store";
 
 class HomeTracker extends React.Component {
     constructor(props) {
@@ -8,8 +9,10 @@ class HomeTracker extends React.Component {
         this.state = {
             houseConfig : this.props.houseConfig,
             hasLoaded : false,
-            selectedFloor : 0
-        }
+            selectedFloor : HomeTrackerStore.getState().selectedFloor,
+            currentLocation : HomeTrackerStore.getState().currentLocation
+        };
+        HomeTrackerStore.subscribe(this.onStoreUpdate.bind(this));
     }
 
     componentWillReceiveProps(nextProps){
@@ -23,12 +26,20 @@ class HomeTracker extends React.Component {
         }
     }
 
+    onStoreUpdate() {
+        this.setState({
+            selectedFloor : HomeTrackerStore.getState().selectedFloor
+        })
+    }
+
+
     createRooms() {
         let index = this.state.selectedFloor;
         let style = { marginLeft : -(this.state.houseConfig.floors[index].rooms.length * 50) + "px" };
         return this.state.houseConfig.floors[index].rooms.map((room, i) => {
+            let className = this.state.currentLocation.currentRoom == i && this.state.selectedFloor == this.state.currentLocation.currentFloor ? "room current-room" : "room";
             return (
-                <div key={i} styleName="cube" style={style}>
+                <div key={i} styleName="cube" style={style} className={className}>
                     <div styleName="side front"/>
                     <div styleName="side back"/>
                     <div styleName="side right"/>
@@ -49,9 +60,10 @@ class HomeTracker extends React.Component {
             return(
                 <div>
                     <h2>Occupant's Residence</h2>
-                    { this.createRooms() }
+                    <div styleName="home-map-holder">
+                        { this.createRooms() }
+                    </div>
                 </div>
-
             );
         }
 
