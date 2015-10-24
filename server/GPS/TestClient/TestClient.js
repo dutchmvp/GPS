@@ -2,7 +2,7 @@
 
     "use strict";
 
-    var baseUrl = "http://localhost:57911/";
+    var baseUrl = "http://localhost:81/";
 
     $(document).ready(function () {
 
@@ -24,7 +24,11 @@
             });
         };
 
-        $("#btnSendLocationRequest").click(function () {
+        /* ********************************************************************** */
+        /* Client REST API                                                        */
+        /* ********************************************************************** */
+
+        $("#btnClientLocation").click(function () {
             var data = {
                 "locations": [
                     {
@@ -44,19 +48,43 @@
             postJson("api/client/location", data);
         });
 
-        $("#btnSendHeartRateRequest").click(function () {
+        $("#btnClientHeartRate").click(function () {
             var data = {
                 heartRate: 81
             };
             postJson("api/client/heartrate", data);
         });
 
-        $("#btnSendPanicRequest").click(function () {
+        $("#btnClientPanic").click(function () {
             postJson("api/client/panic");
         });
 
-        $("#btnSendPanicOverRequest").click(function () {
+        $("#btnClientPanicOver").click(function () {
             postJson("api/client/panicover");
+        });
+
+        /* ********************************************************************** */
+        /* Volunteer Portal REST API                                              */
+        /* ********************************************************************** */
+
+        $("#btnVolunteerGetAll").click(function () {
+            postJson("api/volunteer");
+        });
+
+        $("#btnVolunteerGet").click(function () {
+            postJson("api/volunteer");
+        });
+
+        $("#btnVolunteerRegister").click(function () {
+            postJson("api/volunteer");
+        });
+
+        $("#btnVolunteerSetAvailabilityTrue").click(function () {
+            postJson("api/volunteer");
+        });
+
+        $("#btnVolunteerSetAvailabilityFalse").click(function () {
+            postJson("api/volunteer");
         });
     });
 }());
