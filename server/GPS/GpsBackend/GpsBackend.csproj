@@ -229,6 +229,7 @@
     <Compile Include="Models\HeartRateRequest.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LocationRequest.cs" />
+    <Compile Include="Models\LoginRequest.cs" />
     <Compile Include="Models\PanicRequest.cs" />
     <Compile Include="Models\PanicOverRequest.cs" />
     <Compile Include="Models\RegisterRequest.cs" />

@@ -2,17 +2,24 @@
 
     "use strict";
 
-    var baseUrl = "http://localhost:57911/";
+    var baseUrl = "http://localhost:81/";
 
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         var id = "Granny Smith";
 
-        var getTimestamp = function () {
+        var getTimestamp = function() {
             return Math.floor((new Date()).getTime() / 1000);
         };
 
-        var postJson = function (path, data) {
+        var getJson = function(path) {
+            return $.ajax({
+                url: baseUrl + path,
+                method: "GET"
+            });
+        };
+
+        var postJson1 = function(path, data) {
             data = data || {};
             data.id = id;
             data.timestamp = getTimestamp();
@@ -24,7 +31,21 @@
             });
         };
 
-        $("#btnSendLocationRequest").click(function () {
+        var postJson2 = function(path, data) {
+            data = data || {};
+            return $.ajax({
+                url: baseUrl + path,
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(data)
+            });
+        };
+
+        /* ********************************************************************** */
+        /* Client REST API                                                        */
+        /* ********************************************************************** */
+
+        $("#btnClientLocation").click(function() {
             var data = {
                 "locations": [
                     {
@@ -41,22 +62,70 @@
                     }
                 ]
             };
-            postJson("api/client/location", data);
+            postJson1("api/client/location", data);
         });
 
-        $("#btnSendHeartRateRequest").click(function () {
+        $("#btnClientHeartRate").click(function() {
             var data = {
                 heartRate: 81
             };
-            postJson("api/client/heartrate", data);
+            postJson1("api/client/heartrate", data);
         });
 
-        $("#btnSendPanicRequest").click(function () {
-            postJson("api/client/panic");
+        $("#btnClientPanic").click(function() {
+            postJson1("api/client/panic");
         });
 
-        $("#btnSendPanicOverRequest").click(function () {
-            postJson("api/client/panicover");
+        $("#btnClientPanicOver").click(function() {
+            postJson1("api/client/panicover");
+        });
+
+        /* ********************************************************************** */
+        /* Volunteer Portal REST API                                              */
+        /* ********************************************************************** */
+
+        $("#btnVolunteerGetAll").click(function() {
+            getJson("api/volunteer");
+        });
+
+        $("#btnVolunteerGet").click(function() {
+            getJson("api/volunteer/1");
+        });
+
+        $("#btnVolunteerRegister").click(function() {
+            var data = {
+                firstName: "Jon",
+                lastName: "Taylor",
+                mobile: "07546 372748",
+                email: "jonathan.taylor@dsl.pipex.com",
+                postcode: "M21 8TX",
+                passwordHash: "password"
+            };
+            postJson2("api/volunteer/register", data);
+        });
+
+        $("#btnVolunteerLogin").click(function () {
+            var data = {
+                email: "jonathan.taylor@dsl.pipex.com",
+                passwordHash: "password"
+            };
+            postJson2("api/volunteer/login", data);
+        });
+
+        $("#btnVolunteerSetAvailabilityTrue").click(function() {
+            var data = {
+                id: 1,
+                availability: true
+            };
+            postJson2("api/volunteer/availability", data);
+        });
+
+        $("#btnVolunteerSetAvailabilityFalse").click(function() {
+            var data = {
+                id: 1,
+                availability: false
+            };
+            postJson2("api/volunteer/availability", data);
         });
     });
 }());

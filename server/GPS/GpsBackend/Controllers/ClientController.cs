@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.Data.Entity.Validation;
+using System.Diagnostics;
+using System.Net;
 using System.Web.Http;
 using GpsBackend.Models;
 
@@ -18,6 +20,19 @@ namespace GpsBackend.Controllers
         [HttpPost]
         public IHttpActionResult Location(LocationRequest location)
         {
+            Debug.WriteLine("Location");
+            Debug.WriteLine($"{location.Id}");
+            Debug.WriteLine($"{location.Timestamp}");
+            if (location.Locations != null)
+            {
+                for (var i = 0; i < location.Locations.Count; i++)
+                {
+                    Debug.WriteLine($"{location.Locations[i].Uuid}");
+                    Debug.WriteLine($"{location.Locations[i].MajorNumber}");
+                    Debug.WriteLine($"{location.Locations[i].MinorNumber}");
+                    Debug.WriteLine($"{location.Locations[i].Strength}");
+                }
+            }
             return Content(HttpStatusCode.OK, new {});
         }
 
