@@ -3,3 +3,20 @@
 
 ._3NCduS4qzUoKsRLKyigYrm {
   margin-left: 20px; }
+
+._2p9shh0HToJCzrFAw3SgBS {
+  width: 50px;
+  height: 50px;
+  padding: 20px;
+  background-color: #ededed;
+  cursor: pointer;
+  transition: background-color 1s ease; }
+  ._2p9shh0HToJCzrFAw3SgBS:hover {
+    background-color: #bababa; }
+.floor-selected {
+  transition: background-color 1s ease;
+  background-color: greenyellow;
+  &:hover {
+  background-color: darken(greenyellow, 20%) !important;
+  }
+}

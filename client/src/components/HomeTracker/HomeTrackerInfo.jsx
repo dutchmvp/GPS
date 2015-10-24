@@ -1,6 +1,7 @@
 import React from "react";
 import CSSModule from "react-css-modules";
 import styles from "./info-styles";
+import "../../styles/global";
 
 class HomeTrackerInfo extends React.Component {
 
@@ -32,7 +33,7 @@ class HomeTrackerInfo extends React.Component {
         }).reduce((a,b) => {
             return a.length + b.length;
         });
-        let housePlan = this.makeHousePlan();
+        let housePlan = this.createHousePlan();
         return (
             <div>
                 <h2>House Stats</h2>
@@ -43,11 +44,14 @@ class HomeTrackerInfo extends React.Component {
                 <hr />
                 <p><strong>Occupant location:</strong> { (this.state.occupantLocation || "awaiting positional data") }</p>
                 <p><strong>Heartbeat</strong> { (this.state.beatsPerMinute || "awaiting data") }</p>
+                <hr />
+                <h2>Floor Select</h2>
+                { this.createFloorSelectButtons() }
             </div>
         );
     }
 
-    makeHousePlan() {
+    createHousePlan() {
         let floors = this.state.houseConfig.floors;
         return floors.map((floor, i) => {
             let rooms = floor.rooms.map((room, j) => {
@@ -62,6 +66,29 @@ class HomeTrackerInfo extends React.Component {
                 </div>
             );
         });
+    }
+
+    createFloorSelectButtons(){
+        return this.state.houseConfig.floors.map((floor, i) => {
+            let selected = i === 0 ? "floor-selected" : "";
+            return (
+                <div
+                    data-floor={i}
+                    styleName="floor-select-btn"
+                    className={selected}
+                    onClick={this.onFloorSelectButtonClick}>
+                        <p>{i+1}</p>
+                </div>
+            );
+        }).reverse();
+    }
+
+    onFloorSelectButtonClick(evt) {
+        let target = evt.target;
+        if(target.tagName === "P") {
+            target = target.parentNode;
+        }
+        console.log(target.getAttribute("data-floor"));
     }
 
     render() {

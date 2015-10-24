@@ -11,19 +11,19 @@ System components:
 - Apple Watch Client
     - sends beacon location information
     - sends regular heart rate information
-    - raises panic button alerts
-    - clears panic button alerts
+    - raises panics
+    - clears panics
 - Backend Server
     - maintains a repository of registered volunteers
-    - receives information from the Apple Watch Client
-    - interprets the information and keeps the Monitoring Client up-to-date via SignalR
-    - sends alerts to registered volunteers when panic buttons go off
+    - receives location and heart rate information from the Apple Watch Client
+    - interprets the information from the Apple Watch Client and keeps the Monitoring Client up-to-date via SignalR
+    - sends alerts to registered volunteers when panics occur
 - Monitoring Client
-    - receives information from the Backend Server and visualises it
+    - receives up-to-date information from the Backend Server and visualises it
 - Volunteer Registration Website
     - allows volunteers to register their details and indicate their availability
 - Volunteer Notifications
-    - SMS message is sent to the nearest available registered volunteer when a panic button goes off
+    - SMS message is sent to the nearest available registered volunteer when a panic occurs
 
 ## APIs
 
@@ -70,10 +70,10 @@ api/client/heartrate
 }
 ```
 
-#### PanicButton (POST)
+#### Panic (POST)
 
 ```
-api/client/panicbutton
+api/client/panic
 ```
 
 ```
@@ -101,7 +101,7 @@ api/client/panicover
 ```
 function roomUpdate(room);
 function heartRateUpdate(heartRate);
-function panicButton();
+function panic();
 function panicOver();
 ```
 

@@ -13,6 +13,7 @@
         };
 
         var postJson = function (path, data) {
+            data = data || {};
             data.id = id;
             data.timestamp = getTimestamp();
             return $.ajax({
@@ -23,7 +24,7 @@
             });
         };
 
-        $("#btnSendLocationData").click(function () {
+        $("#btnSendLocationRequest").click(function () {
             var data = {
                 "locations": [
                     {
@@ -41,6 +42,21 @@
                 ]
             };
             postJson("api/client/location", data);
+        });
+
+        $("#btnSendHeartRateRequest").click(function () {
+            var data = {
+                heartRate: 81
+            };
+            postJson("api/client/heartrate", data);
+        });
+
+        $("#btnSendPanicRequest").click(function () {
+            postJson("api/client/panic");
+        });
+
+        $("#btnSendPanicOverRequest").click(function () {
+            postJson("api/client/panicover");
         });
     });
 }());
