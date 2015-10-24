@@ -7,12 +7,15 @@ import "../../styles/global";
 // components
 import Header from './Header';
 
+// services
+import UserService from '../../actions/user-service';
+
 class App extends React.Component {
 	constructor() {
 		super(...arguments);
 
 		this.state = {
-			loggedIn: false
+			loggedIn: UserService.authenticated
 		};
 	}
 

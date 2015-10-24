@@ -12,8 +12,9 @@ class Header extends React.Component {
 
 		if (this.props.isLoggedIn) {
 			userNavigation = (
-				<ul>
+				<ul className="nav navbar-nav navbar-right">
 					<li><Link to="details">My Details</Link></li>
+					<li><Link to="logout">Logout</Link></li>
 				</ul>
 			)
 
@@ -28,7 +29,7 @@ class Header extends React.Component {
 			<div className="navbar navbar-default navbar-static-top">
 				<div className="container">
 					<div className="navbar-header">
-						<a href="" className="navbar-brand">GPS</a>
+						<Link to="/" className="navbar-brand">GPS</Link>
 					</div>
 
 					{pageNavigation}
