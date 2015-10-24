@@ -9,9 +9,30 @@ namespace GpsBackend.Controllers
     {
         [Route("location")]
         [HttpPost]
-        public IHttpActionResult Location(Location location)
+        public IHttpActionResult Location(LocationRequest location)
         {
             return Content(HttpStatusCode.Accepted, "Hello");
+        }
+
+        [Route("heartrate")]
+        [HttpPost]
+        public IHttpActionResult HeartRate(HeartRateRequest heartRate)
+        {
+            return Ok();
+        }
+
+        [Route("panic")]
+        [HttpPost]
+        public IHttpActionResult PanicButton(PanicRequest panic)
+        {
+            return Ok();
+        }
+
+        [Route("panicover")]
+        [HttpPost]
+        public IHttpActionResult PanicOver(PanicOverRequest panicOver)
+        {
+            return Ok();
         }
     }
 }
