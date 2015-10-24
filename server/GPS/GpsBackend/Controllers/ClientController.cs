@@ -18,28 +18,28 @@ namespace GpsBackend.Controllers
         [HttpPost]
         public IHttpActionResult Location(LocationRequest location)
         {
-            return Content(HttpStatusCode.Accepted, "Hello");
+            return Content(HttpStatusCode.OK, new {});
         }
 
         [Route("heartrate")]
         [HttpPost]
         public IHttpActionResult HeartRate(HeartRateRequest heartRate)
         {
-            return Ok();
+            return Content(HttpStatusCode.OK, new { });
         }
 
         [Route("panic")]
         [HttpPost]
         public IHttpActionResult PanicButton(PanicRequest panic)
         {
-            return Ok();
+            return Content(HttpStatusCode.OK, new { });
         }
 
         [Route("panicover")]
         [HttpPost]
         public IHttpActionResult PanicOver(PanicOverRequest panicOver)
         {
-            return Ok();
+            return Content(HttpStatusCode.OK, new { });
         }
     }
 }
