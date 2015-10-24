@@ -6,7 +6,8 @@ var path = require("path"),
 
 module.exports = {
     entry: {
-        HomeTrackerApp: "./src/components/HomeTrackerApp.jsx"
+        HomeTrackerApp: "./src/components/HomeTrackerApp.jsx",
+        VolunteerPortalApp: "./src/components/HomeTrackerApp.jsx"
     },
     resolve: {
         root: path.resolve(__dirname + "/src"),
@@ -36,7 +37,8 @@ module.exports = {
     },
     watch : true,
     plugins:[
-        new HtmlWebpackPlugin({ template: "./src/home-tracker.html"}),
+        new HtmlWebpackPlugin({ template: "./src/home-tracker.html", filename : "home-tracker.html", excludeChunks : ["VolunteerPortalApp"]}),
+        new HtmlWebpackPlugin({ template: "./src/volunteer-portal.html", filename : "volunteer-portal.html", excludeChunks : ["HomeTrackerApp"]}),
         new ExtractTextPlugin("./styles/[name].styles", { allChunks : true })
     ]
 };
