@@ -7,6 +7,13 @@ namespace GpsBackend.Controllers
     [RoutePrefix("api/client")]
     public class ClientController : ApiController
     {
+        [Route("ping")]
+        [HttpGet]
+        public IHttpActionResult Ping()
+        {
+            return Content(HttpStatusCode.Accepted, "Pong");
+        }
+
         [Route("location")]
         [HttpPost]
         public IHttpActionResult Location(LocationRequest location)

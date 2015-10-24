@@ -1,6 +1,7 @@
 import React from 'react';
+import AuthenticatedRoute from '../Utils/AuthenticatedRoute';
 
-class Alerts extends React.Component {
+class Alerts extends AuthenticatedRoute {
 	submit(evt) {
 		evt.preventDefault();
 		
