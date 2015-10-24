@@ -12,10 +12,27 @@
             return Math.floor((new Date()).getTime() / 1000);
         };
 
-        var postJson = function (path, data) {
+        var getJson = function (path) {
+            return $.ajax({
+                url: baseUrl + path,
+                method: "GET"
+            });
+        };
+
+        var postJson1 = function (path, data) {
             data = data || {};
             data.id = id;
             data.timestamp = getTimestamp();
+            return $.ajax({
+                url: baseUrl + path,
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(data)
+            });
+        };
+
+        var postJson2 = function (path, data) {
+            data = data || {};
             return $.ajax({
                 url: baseUrl + path,
                 method: "POST",
@@ -45,22 +62,22 @@
                     }
                 ]
             };
-            postJson("api/client/location", data);
+            postJson1("api/client/location", data);
         });
 
         $("#btnClientHeartRate").click(function () {
             var data = {
                 heartRate: 81
             };
-            postJson("api/client/heartrate", data);
+            postJson1("api/client/heartrate", data);
         });
 
         $("#btnClientPanic").click(function () {
-            postJson("api/client/panic");
+            postJson1("api/client/panic");
         });
 
         $("#btnClientPanicOver").click(function () {
-            postJson("api/client/panicover");
+            postJson1("api/client/panicover");
         });
 
         /* ********************************************************************** */
@@ -68,23 +85,38 @@
         /* ********************************************************************** */
 
         $("#btnVolunteerGetAll").click(function () {
-            postJson("api/volunteer");
+            getJson("api/volunteer");
         });
 
         $("#btnVolunteerGet").click(function () {
-            postJson("api/volunteer");
+            getJson("api/volunteer/1");
         });
 
         $("#btnVolunteerRegister").click(function () {
-            postJson("api/volunteer");
+            var data = {
+                firstName: "Jon",
+                lastName: "Taylor",
+                mobile: "07546 372748",
+                email: "jonathan.taylor@dsl.pipex.com",
+                postcode: "M21 8TX"
+            };
+            postJson2("api/volunteer/register", data);
         });
 
         $("#btnVolunteerSetAvailabilityTrue").click(function () {
-            postJson("api/volunteer");
+            var data = {
+                id: 1,
+                availability: true
+            };
+            postJson2("api/volunteer/availability", data);
         });
 
         $("#btnVolunteerSetAvailabilityFalse").click(function () {
-            postJson("api/volunteer");
+            var data = {
+                id: 1,
+                availability: false
+            };
+            postJson2("api/volunteer/availability", data);
         });
     });
 }());

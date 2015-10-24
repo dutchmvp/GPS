@@ -231,8 +231,14 @@
     <Compile Include="Models\LocationRequest.cs" />
     <Compile Include="Models\PanicRequest.cs" />
     <Compile Include="Models\PanicOverRequest.cs" />
+    <Compile Include="Models\RegisterRequest.cs" />
+    <Compile Include="Models\AvailabilityRequest.cs" />
+    <Compile Include="Models\Volunteer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\IVolunteerRepository.cs" />
+    <Compile Include="Repositories\VolunteerRepository.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
