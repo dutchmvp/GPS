@@ -1,5 +1,6 @@
 import React from "react";
 import HomeTrackerInfo from "./HomeTracker/HomeTrackerInfo";
+import HomeTracker from "./HomeTracker/HomeTracker";
 import { getHouseConfig } from "../utils/get-home-config";
 
 class HomeTrackerApp extends React.Component {
@@ -23,7 +24,9 @@ class HomeTrackerApp extends React.Component {
         return(
             <div className="row">
                 <div className="col-sm-8">
-                    <p>Stuff coming soon...</p>
+                    <HomeTracker
+                        houseConfig={ this.state.houseConfig }
+                    />
                 </div>
                 <div className="col-sm-4">
                     <HomeTrackerInfo

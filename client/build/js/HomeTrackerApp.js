@@ -64,7 +64,11 @@
 
 	var _HomeTrackerHomeTrackerInfo2 = _interopRequireDefault(_HomeTrackerHomeTrackerInfo);
 
-	var _utilsGetHomeConfig = __webpack_require__(223);
+	var _HomeTrackerHomeTracker = __webpack_require__(223);
+
+	var _HomeTrackerHomeTracker2 = _interopRequireDefault(_HomeTrackerHomeTracker);
+
+	var _utilsGetHomeConfig = __webpack_require__(224);
 
 	var HomeTrackerApp = (function (_React$Component) {
 	    _inherits(HomeTrackerApp, _React$Component);
@@ -96,11 +100,9 @@
 	                _react2["default"].createElement(
 	                    "div",
 	                    { className: "col-sm-8" },
-	                    _react2["default"].createElement(
-	                        "p",
-	                        null,
-	                        "Stuff coming soon..."
-	                    )
+	                    _react2["default"].createElement(_HomeTrackerHomeTracker2["default"], {
+	                        houseConfig: this.state.houseConfig
+	                    })
 	                ),
 	                _react2["default"].createElement(
 	                    "div",
@@ -20573,7 +20575,7 @@
 	                _react2["default"].createElement(
 	                    "h2",
 	                    null,
-	                    "House Stats"
+	                    "Occupant Info"
 	                ),
 	                _react2["default"].createElement(
 	                    "p",
@@ -23403,6 +23405,115 @@
 
 /***/ },
 /* 223 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactCssModules = __webpack_require__(158);
+
+	var _reactCssModules2 = _interopRequireDefault(_reactCssModules);
+
+	var _hometrackerStyles = __webpack_require__(271);
+
+	var _hometrackerStyles2 = _interopRequireDefault(_hometrackerStyles);
+
+	var HomeTracker = (function (_React$Component) {
+	    _inherits(HomeTracker, _React$Component);
+
+	    function HomeTracker(props) {
+	        _classCallCheck(this, HomeTracker);
+
+	        _get(Object.getPrototypeOf(HomeTracker.prototype), "constructor", this).call(this, props);
+	        this.state = {
+	            houseConfig: this.props.houseConfig,
+	            hasLoaded: false,
+	            selectedFloor: 0
+	        };
+	    }
+
+	    _createClass(HomeTracker, [{
+	        key: "componentWillReceiveProps",
+	        value: function componentWillReceiveProps(nextProps) {
+	            var _this = this;
+
+	            if (Object.keys(nextProps.houseConfig).length) {
+	                setTimeout(function () {
+	                    _this.setState({
+	                        hasLoaded: true,
+	                        houseConfig: nextProps.houseConfig
+	                    });
+	                }, 500);
+	            }
+	        }
+	    }, {
+	        key: "createRooms",
+	        value: function createRooms() {
+	            var index = this.state.selectedFloor;
+	            var style = { marginLeft: -(this.state.houseConfig.floors[index].rooms.length * 50) + "px" };
+	            return this.state.houseConfig.floors[index].rooms.map(function (room, i) {
+	                return _react2["default"].createElement(
+	                    "div",
+	                    { key: i, styleName: "cube", style: style },
+	                    _react2["default"].createElement("div", { styleName: "side front" }),
+	                    _react2["default"].createElement("div", { styleName: "side back" }),
+	                    _react2["default"].createElement("div", { styleName: "side right" }),
+	                    _react2["default"].createElement("div", { styleName: "side left" }),
+	                    _react2["default"].createElement("div", { styleName: "side top" }),
+	                    _react2["default"].createElement("div", { styleName: "side bottom" })
+	                );
+	            });
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            if (!this.state.hasLoaded) {
+	                return _react2["default"].createElement(
+	                    "p",
+	                    null,
+	                    "Awaiting occupant data"
+	                );
+	            } else {
+
+	                return _react2["default"].createElement(
+	                    "div",
+	                    null,
+	                    _react2["default"].createElement(
+	                        "h2",
+	                        null,
+	                        "Occupant's Residence"
+	                    ),
+	                    this.createRooms()
+	                );
+	            }
+	        }
+	    }]);
+
+	    return HomeTracker;
+	})(_react2["default"].Component);
+
+	exports["default"] = (0, _reactCssModules2["default"])(HomeTracker, _hometrackerStyles2["default"], { allowMultiple: true });
+	module.exports = exports["default"];
+
+/***/ },
+/* 224 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23417,6 +23528,59 @@
 	        return response.json();
 	    });
 	}
+
+/***/ },
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"cube":"_2WdAFCrMm9Yhrzylx_Fmva","side":"_3RJAfhaNyPZkHOt3sc9Kgf","front":"_2Pg82Is1gyRy5uo1NgKusj","top":"_1YjaUnKpLulj9NQUGLxS8n","right":"_1uXCXVVXLcyMvCC9ngyF7K","left":"_1Cswfil-QNF9Bafw9BQsw7","bottom":"_25Wx_NYh2KN1wnYT6mVD2Z","back":"_1CvDKiovLspVpp-z8kYRDs"};
 
 /***/ }
 /******/ ]);

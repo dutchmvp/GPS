@@ -1,0 +1,33 @@
+.cube {
+  font-size: 8em;
+  width: 4em;
+  margin-top: 100px;
+  transform-style: preserve-3d;
+  transform: rotateX(-10deg) rotateY(32deg);
+  position: relative;
+  &:nth-child(2) {
+    left: 190px;
+    top: -20px;
+  }
+  &:nth-child(3) {
+    left: 380px;
+    top: -40px;
+  }
+}
+
+.side {
+  position: absolute;
+  width: 4em;
+  height: 2em;
+  border: 1px solid rgba(0,0,0,.5);
+  color: white;
+  text-align: center;
+  line-height: 2em;
+}
+
+.front  { width: 2em; transform: translateZ(2em); }
+.top    { width: 2em; height: 4em; transform: rotateX( 90deg)  translateZ(2em); line-height: 4em; }
+.right  { transform: rotateY( 90deg); }
+.left   { transform: rotateY(-90deg)  translateZ(2em); }
+.bottom { width: 2em; height: 4em; transform: rotateX(-90deg); line-height: 4em; }
+.back   { width: 2em; transform: rotateY(-180deg) translateZ(2em); }

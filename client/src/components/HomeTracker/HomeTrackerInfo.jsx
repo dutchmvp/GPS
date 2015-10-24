@@ -36,7 +36,7 @@ class HomeTrackerInfo extends React.Component {
         let housePlan = this.createHousePlan();
         return (
             <div>
-                <h2>House Stats</h2>
+                <h2>Occupant Info</h2>
                 <p><strong>Name:</strong> { this.state.houseConfig.occupant }</p>
                 <p><strong>Num of rooms:</strong> { numOfRooms }</p>
                 <hr />
