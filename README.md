@@ -1,7 +1,5 @@
 ## Granny Positioning System (GPS)
 
-
-
 ## System Diagram
 
 ![System Diagram](https://raw.githubusercontent.com/dutchmvp/GPS/master/images/System%20Diagram.png?token=AApRRefrFxmDYG9tFR_Hfvf4yJj5UKlrks5WNNKcwA%3D%3D)
@@ -31,9 +29,11 @@ System components:
 
 ### Apple Watch Client to Backend Server REST API
 
-Base URL ?
-
 #### Location (POST)
+
+```
+api/client/location
+```
 
 ```
 {
@@ -59,6 +59,10 @@ Base URL ?
 #### HeartRate (POST)
 
 ```
+api/client/heartrate
+```
+
+```
 {
     "id": "Granny Smith",
     "timestamp": 1234567890,
@@ -69,6 +73,10 @@ Base URL ?
 #### PanicButton (POST)
 
 ```
+api/client/panicbutton
+```
+
+```
 {
     "id": "Granny Smith",
     "timestamp": 1234567890
@@ -76,6 +84,10 @@ Base URL ?
 ```
 
 #### PanicOver (POST)
+
+```
+api/client/panicover
+```
 
 ```
 {
@@ -95,12 +107,81 @@ function panicOver();
 
 ### Volunteer Registration
 
-- Register
-    - FirstName
-    - LastName
-    - Mobile Phone Number
-    - Email
-    - Postcode
-- Unregister
-- Available
-- Unavailable
+#### Get All (GET)
+
+```
+api/volunteers
+```
+
+```
+[
+    {
+
+        "id": 123
+        "firstName": "Ann",
+        "lastName": "Summers1",
+        "mobile": "07546 123456",
+        "email": "ann.summers1@gmail.com",
+        "postcode": "CR3 0GG",
+        "passwordHash": "password"
+    },
+    {
+
+        "id": 1234
+        "firstName": "Ann",
+        "lastName": "Summers2",
+        "mobile": "07546 123456",
+        "email": "ann.summers2@gmail.com",
+        "postcode": "CR3 0GG",
+        "passwordHash": "password"
+    }
+]
+```
+
+#### Get (GET)
+
+```
+api/volunteers/id
+```
+
+```
+{
+    "id": 123
+    "firstName": "Ann",
+    "lastName": "Summers",
+    "mobile": "07546 123456",
+    "email": "ann.summers@gmail.com",
+    "postcode": "CR3 0GG",
+    "passwordHash": "password"
+}
+```
+
+#### Register (POST)
+
+```
+api/volunteers
+```
+
+```
+{
+    "firstName": "Ann",
+    "lastName": "Summers",
+    "mobile": "07546 123456",
+    "email": "ann.summers@gmail.com",
+    "postcode": "CR3 0GG",
+    "passwordHash": "password"
+}
+```
+
+#### SetAvailability (POST)
+
+```
+api/volunteers/availability
+```
+
+```
+{
+    "id": 123,
+    "available": true
+}
+```

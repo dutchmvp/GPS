@@ -1,3 +1,8 @@
+packages/
+bin/
+obj/
+.vs/
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
@@ -43,5 +48,6 @@ Temporary Items
 .apdisk
 
 node_modules
+client/build/js
 .idea
 *.txt
