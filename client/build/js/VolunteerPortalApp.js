@@ -62,15 +62,15 @@
 
 	// components
 
-	var _volunteerPortalHeaderJsx = __webpack_require__(157);
+	var _volunteerPortalHeaderJsx = __webpack_require__(159);
 
 	var _volunteerPortalHeaderJsx2 = _interopRequireDefault(_volunteerPortalHeaderJsx);
 
-	var _volunteerPortalRegisterLoginJsx = __webpack_require__(158);
+	var _volunteerPortalRegisterLoginJsx = __webpack_require__(160);
 
 	var _volunteerPortalRegisterLoginJsx2 = _interopRequireDefault(_volunteerPortalRegisterLoginJsx);
 
-	var _volunteerPortalDashboardJsx = __webpack_require__(161);
+	var _volunteerPortalDashboardJsx = __webpack_require__(163);
 
 	var _volunteerPortalDashboardJsx2 = _interopRequireDefault(_volunteerPortalDashboardJsx);
 
@@ -20487,7 +20487,9 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 157 */
+/* 157 */,
+/* 158 */,
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -20605,7 +20607,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 158 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20630,11 +20632,11 @@
 
 	// components
 
-	var _registerLoginRegisterJsx = __webpack_require__(159);
+	var _registerLoginRegisterJsx = __webpack_require__(161);
 
 	var _registerLoginRegisterJsx2 = _interopRequireDefault(_registerLoginRegisterJsx);
 
-	var _registerLoginLoginJsx = __webpack_require__(160);
+	var _registerLoginLoginJsx = __webpack_require__(162);
 
 	var _registerLoginLoginJsx2 = _interopRequireDefault(_registerLoginLoginJsx);
 
@@ -20666,7 +20668,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 159 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20777,7 +20779,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 160 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20858,7 +20860,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 161 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

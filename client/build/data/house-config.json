@@ -1,0 +1,32 @@
+{
+  "id" : "1234567890",
+  "occupant" : "Mrs Granny Smith",
+  "latLong" : ["53.555862", "-2.507091"],
+  "floors" : [{
+    "desc" : "ground-floor",
+    "rooms" : [{
+      "id" : "ydhsjfhsdkf",
+      "desc": "Lounge",
+      "beaconId" : "blah"
+    }, {
+      "id" : "ydhsfdfsdkf",
+      "desc": "Kitchen",
+      "beaconId" : "blah2"
+    }]
+    }, {
+    "desc" : "first-floor",
+    "rooms" :  [{
+      "id" : "dsfhsdkf",
+      "desc": "Bathroom",
+      "beaconId" : "blah"
+    }, {
+    "id" : "hbnjkkd",
+    "desc": "Bedroom",
+    "beaconId" : "blah2"
+    }, {
+    "id" : "hbnjkkd",
+    "desc": "Landing",
+    "beaconId2" : "blah2"
+    }]
+  }]
+}

@@ -7,6 +7,8 @@
 </head>
 <body>
 
+    <div class="container"></div>
+
     <script src="/socket.io/socket.io.js"></script>
     {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
         <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
