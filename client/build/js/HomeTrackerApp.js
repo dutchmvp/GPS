@@ -60,25 +60,54 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _HomeTrackerHomeTrackerInfo = __webpack_require__(157);
+
+	var _HomeTrackerHomeTrackerInfo2 = _interopRequireDefault(_HomeTrackerHomeTrackerInfo);
+
+	var _utilsGetHomeConfig = __webpack_require__(158);
+
 	var HomeTrackerApp = (function (_React$Component) {
 	    _inherits(HomeTrackerApp, _React$Component);
 
 	    function HomeTrackerApp() {
 	        _classCallCheck(this, HomeTrackerApp);
 
-	        _get(Object.getPrototypeOf(HomeTrackerApp.prototype), "constructor", this).apply(this, arguments);
+	        _get(Object.getPrototypeOf(HomeTrackerApp.prototype), "constructor", this).call(this);
+	        this.state = {
+	            houseConfig: {}
+	        };
+	        (0, _utilsGetHomeConfig.getHouseConfig)().then(this.onConfigLoad.bind(this));
 	    }
 
 	    _createClass(HomeTrackerApp, [{
+	        key: "onConfigLoad",
+	        value: function onConfigLoad(data) {
+	            console.log(data);
+	            this.setState({
+	                houseConfig: data
+	            });
+	        }
+	    }, {
 	        key: "render",
 	        value: function render() {
 	            return _react2["default"].createElement(
 	                "div",
-	                null,
+	                { className: "row" },
 	                _react2["default"].createElement(
-	                    "h1",
-	                    null,
-	                    "Hello world"
+	                    "div",
+	                    { className: "col-sm-8" },
+	                    _react2["default"].createElement(
+	                        "p",
+	                        null,
+	                        "Stuff coming soon..."
+	                    )
+	                ),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "col-sm-4" },
+	                    _react2["default"].createElement(_HomeTrackerHomeTrackerInfo2["default"], {
+	                        houseConfig: this.state.houseConfig
+	                    })
 	                )
 	            );
 	        }
@@ -87,7 +116,7 @@
 	    return HomeTrackerApp;
 	})(_react2["default"].Component);
 
-	_react2["default"].render(_react2["default"].createElement(HomeTrackerApp, null), document.body);
+	_react2["default"].render(_react2["default"].createElement(HomeTrackerApp, null), document.querySelector(".container"));
 
 /***/ },
 /* 1 */
@@ -20464,6 +20493,112 @@
 	module.exports = onlyChild;
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 157 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var HomeTrackerInfo = (function (_React$Component) {
+	    _inherits(HomeTrackerInfo, _React$Component);
+
+	    function HomeTrackerInfo(props) {
+	        _classCallCheck(this, HomeTrackerInfo);
+
+	        _get(Object.getPrototypeOf(HomeTrackerInfo.prototype), "constructor", this).call(this, props);
+	        this.state = {
+	            houseConfig: this.props.houseConfig,
+	            hasLoaded: false
+	        };
+	    }
+
+	    _createClass(HomeTrackerInfo, [{
+	        key: "componentWillReceiveProps",
+	        value: function componentWillReceiveProps(nextProps) {
+	            var _this = this;
+
+	            if (Object.keys(nextProps.houseConfig).length) {
+	                setTimeout(function () {
+	                    _this.setState({
+	                        hasLoaded: true
+	                    });
+	                }, 500);
+	            }
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var output = undefined;
+	            if (!this.state.hasLoaded) {
+	                output = HomeTrackerInfo.getAwaitingDataMsg();
+	            } else {
+	                output = HomeTrackerInfo.getInfoMarkup();
+	            }
+	            return _react2["default"].createElement(
+	                "div",
+	                null,
+	                output
+	            );
+	        }
+	    }]);
+
+	    return HomeTrackerInfo;
+	})(_react2["default"].Component);
+
+	exports["default"] = HomeTrackerInfo;
+
+	HomeTrackerInfo.getAwaitingDataMsg = function () {
+	    return _react2["default"].createElement(
+	        "p",
+	        null,
+	        "Awaiting data please wait..."
+	    );
+	};
+
+	HomeTrackerInfo.getInfoMarkup = function () {
+	    return _react2["default"].createElement(
+	        "p",
+	        null,
+	        "Data hath arrived..."
+	    );
+	};
+	module.exports = exports["default"];
+
+/***/ },
+/* 158 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	exports.getHouseConfig = getHouseConfig;
+
+	function getHouseConfig() {
+	    return fetch('/data/house-config.json').then(function (response) {
+	        return response.json();
+	    });
+	}
 
 /***/ }
 /******/ ]);
