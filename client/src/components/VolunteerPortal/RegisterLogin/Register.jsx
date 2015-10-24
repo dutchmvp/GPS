@@ -1,6 +1,7 @@
 import React from 'react';
+import UnAuthenticatedRoute from '../Utils/UnAuthenticatedRoute';
 
-class Register extends React.Component {
+class Register extends UnAuthenticatedRoute {
 	submit(evt) {
 		evt.preventDefault();
 		

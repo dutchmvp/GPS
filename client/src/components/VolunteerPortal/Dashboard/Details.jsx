@@ -1,6 +1,7 @@
 import React from 'react';
+import AuthenticatedRoute from '../Utils/AuthenticatedRoute';
 
-class Details extends React.Component {
+class Details extends AuthenticatedRoute {
 	submit(evt) {
 		evt.preventDefault();
 		
