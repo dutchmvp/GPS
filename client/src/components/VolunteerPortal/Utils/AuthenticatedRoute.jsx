@@ -1,13 +1,13 @@
 import React from 'react';
-import userService from '../../../actions/user-service';
+import UserService from '../../../actions/user-service';
 
 class AuthenticatedRoute extends React.Component {
 	constructor(props) {
 		super(props);
 	}
 
-	static willTransitionTo(transition) {		
-		if (!userService.authenticated) {
+	static willTransitionTo(transition) {			
+		if (!UserService.authenticated) {
 			transition.redirect('login', {}, { 'nextPath': transition.path });
 		}
 	}
