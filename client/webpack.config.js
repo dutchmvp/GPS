@@ -7,7 +7,7 @@ var path = require("path"),
 module.exports = {
     entry: {
         HomeTrackerApp: "./src/components/HomeTrackerApp.jsx",
-        VolunteerPortalApp: "./src/components/HomeTrackerApp.jsx"
+        VolunteerPortalApp: "./src/components/VolunteerPortalApp.jsx"
     },
     resolve: {
         root: path.resolve(__dirname + "/src"),
