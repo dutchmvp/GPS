@@ -20,3 +20,11 @@
   background-color: darken(greenyellow, 20%) !important;
   }
 }
+
+.footer {
+	margin: 15px auto;
+}
+
+p.event {
+	text-align: right;
+}
