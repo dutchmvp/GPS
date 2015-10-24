@@ -1,11 +1,39 @@
 import React from 'react';
 import UnAuthenticatedRoute from '../Utils/UnAuthenticatedRoute';
+import UserService from '../../../actions/user-service';
 
 class Login extends UnAuthenticatedRoute {
 	submit(evt) {
 		evt.preventDefault();
-		
-		console.log('submit!');
+
+		let data = {};
+
+		// build up data/validation
+		let inputs = evt.target.querySelectorAll('input');
+
+		for (let i = 0; i < inputs.length; i++) {
+			let input = inputs[i];
+
+			if (!input.value.length) {
+				input.parentNode.classList.add('has-error');
+			}
+			else {
+				input.parentNode.classList.remove('has-error');
+				input.parentNode.classList.add('has-success');
+			}
+
+			data[input.getAttribute('id')] = input.value;
+		}
+
+		if (evt.target.querySelectorAll('.has-error').length == 0) {
+			UserService.login(data).then((response) => {
+				// store user
+				localStorage.setItem('user', JSON.stringify(response));
+
+				// dashboard time
+				window.location = 'volunteer-portal.html';
+			});
+		}
 	}
 
 	render() {
