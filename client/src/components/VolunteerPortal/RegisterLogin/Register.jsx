@@ -1,6 +1,6 @@
 import React from 'react';
 import UnAuthenticatedRoute from '../Utils/UnAuthenticatedRoute';
-import userService from '../../../actions/user-service';
+import UserService from '../../../actions/user-service';
 
 class Register extends UnAuthenticatedRoute {
 	constructor() {
@@ -29,15 +29,21 @@ class Register extends UnAuthenticatedRoute {
 			data[input.getAttribute('id')] = input.value;
 		}
 
-		userService.register(data).then(function(response) {
-			console.log(response);
-		});
+		if (evt.target.querySelectorAll('.has-error').length == 0) {
+			UserService.register(data).then((response) => {
+				// store user
+				localStorage.setItem('user', JSON.stringify(response));
+
+				// dashboard time
+				window.location = 'volunteer-portal.html';
+			});
+		}
 	}
 	
 	render() {
 		return (
 			<div className="container">
-				<form role="form" onSubmit={this.submit.bind(this)} enctype="multipart/form-data">
+				<form role="form" onSubmit={this.submit.bind(this)}>
 					<div className="form-group">
 						<label htmlFor="email">Email address:</label>
 						<input type="email" className="form-control" id="email" />
@@ -48,11 +54,11 @@ class Register extends UnAuthenticatedRoute {
 					</div>
 					<div className="form-group">
 						<label htmlFor="first-name">First Name:</label>
-						<input type="text" className="form-control" id="first-name" />
+						<input type="text" className="form-control" id="firstname" />
 					</div>
 					<div className="form-group">
 						<label htmlFor="last-name">Last Name:</label>
-						<input type="text" className="form-control" id="last-name" />
+						<input type="text" className="form-control" id="lastname" />
 					</div>
 					<div className="form-group">
 						<label htmlFor="mobile">Mobile Number:</label>
