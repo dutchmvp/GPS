@@ -1,32 +1,4 @@
-.floor-selected {
-  transition: background-color 1s ease;
-  background-color: rgba(0,0,255, .25);
-}
-
-.footer {
-	margin: 15px auto;
-	background: #f8f8f8;
-	border-top: 1px solid #e7e7e7;
-	padding: 8px 0 0;
-}
-
-p.event {
-	text-align: right;
-}
-
-.current-room > div {
-  background-color: rgba(0,0,255, .25);
-}
-
-.highlight-floor {
-  background-color: rgba(0,0,255, .25);
-  width: 75px;
-  padding: 5px;
-}
-
-.danger {
-  color: coral;
-}.timeline {
+.timeline {
   list-style: none;
   padding: 20px 0 20px;
   position: relative;

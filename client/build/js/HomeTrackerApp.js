@@ -68,7 +68,11 @@
 
 	var _HomeTrackerHomeTracker2 = _interopRequireDefault(_HomeTrackerHomeTracker);
 
-	var _utilsGetHomeConfig = __webpack_require__(236);
+	var _utilsSocketClient = __webpack_require__(236);
+
+	var _utilsSocketClient2 = _interopRequireDefault(_utilsSocketClient);
+
+	var _utilsGetHomeConfig = __webpack_require__(237);
 
 	var HomeTrackerApp = (function (_React$Component) {
 	    _inherits(HomeTrackerApp, _React$Component);
@@ -86,7 +90,7 @@
 	    _createClass(HomeTrackerApp, [{
 	        key: "onConfigLoad",
 	        value: function onConfigLoad(data) {
-	            console.log(data);
+	            console.log("LOADED", data);
 	            this.setState({
 	                houseConfig: data
 	            });
@@ -110,7 +114,10 @@
 	                    _react2["default"].createElement(_HomeTrackerHomeTrackerInfo2["default"], {
 	                        houseConfig: this.state.houseConfig
 	                    })
-	                )
+	                ),
+	                _react2["default"].createElement(_utilsSocketClient2["default"], {
+	                    houseConfig: this.state.houseConfig
+	                })
 	            );
 	        }
 	    }]);
@@ -20544,8 +20551,8 @@
 
 	        _get(Object.getPrototypeOf(HomeTrackerInfo.prototype), "constructor", this).call(this, props);
 	        var location = undefined;
-	        if (Object.keys(this.props.houseConfig).length) {
-	            var current = _storeStore2["default"].getState().currentLocation;
+	        var current = _storeStore2["default"].getState().currentLocation;
+	        if (Object.keys(this.props.houseConfig).length && Object.keys(current).length) {
 	            location = this.props.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
 	        } else {
 	            location = null;
@@ -20553,6 +20560,7 @@
 
 	        this.state = {
 	            houseConfig: this.props.houseConfig,
+	            isPaniced: _storeStore2["default"].getState().panicStatus,
 	            hasLoaded: false,
 	            occupantLocation: location,
 	            beatsPerMinute: null,
@@ -20566,10 +20574,16 @@
 	        value: function onStoreUpdate() {
 	            if (Object.keys(this.state.houseConfig).length) {
 	                var current = _storeStore2["default"].getState().currentLocation;
-	                var _location = this.props.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
+	                var _location = undefined;
+	                if (Object.keys(current).length) {
+	                    _location = this.props.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
+	                } else {
+	                    _location = null;
+	                }
 	                this.setState({
 	                    occupantLocation: _location,
-	                    selectedFloor: _storeStore2["default"].getState().selectedFloor
+	                    selectedFloor: _storeStore2["default"].getState().selectedFloor,
+	                    isPaniced: _storeStore2["default"].getState().panicStatus
 	                });
 	            }
 	        }
@@ -20578,10 +20592,15 @@
 	        value: function componentWillReceiveProps(nextProps) {
 	            var _this = this;
 
+	            var current = _storeStore2["default"].getState().currentLocation;
 	            if (Object.keys(nextProps.houseConfig).length) {
 	                (function () {
-	                    var current = _storeStore2["default"].getState().currentLocation;
-	                    var location = nextProps.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
+	                    var location = undefined;
+	                    if (Object.keys(current).length) {
+	                        location = nextProps.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
+	                    } else {
+	                        location = null;
+	                    }
 	                    setTimeout(function () {
 	                        _this.setState({
 	                            hasLoaded: true,
@@ -20602,9 +20621,20 @@
 	                return a.length + b.length;
 	            });
 	            var housePlan = this.createHousePlan();
+	            var panicStatus = this.state.isPaniced ? _react2["default"].createElement(
+	                "span",
+	                { styleName: "panic-active" },
+	                _react2["default"].createElement("br", null),
+	                "WARNING: PANIC ACTIVATED"
+	            ) : "inactive";
+	            if (this.state.isPaniced) {
+	                document.body.classList.add("danger");
+	            } else {
+	                document.body.classList.remove("danger");
+	            }
 	            return _react2["default"].createElement(
 	                "div",
-	                null,
+	                { styleName: "info-holder" },
 	                _react2["default"].createElement(
 	                    "h2",
 	                    null,
@@ -20657,6 +20687,17 @@
 	                    " ",
 	                    this.state.beatsPerMinute || "awaiting data"
 	                ),
+	                _react2["default"].createElement(
+	                    "p",
+	                    null,
+	                    _react2["default"].createElement(
+	                        "strong",
+	                        null,
+	                        "Panic status:"
+	                    ),
+	                    " ",
+	                    panicStatus
+	                ),
 	                _react2["default"].createElement("hr", null),
 	                _react2["default"].createElement(
 	                    "h2",
@@ -20670,12 +20711,20 @@
 	        key: "createHousePlan",
 	        value: function createHousePlan() {
 	            var floors = this.state.houseConfig.floors;
+	            var current = _storeStore2["default"].getState().currentLocation;
+	            var location = undefined;
+	            if (Object.keys(current).length) {
+	                location = floors[current.currentFloor].rooms[current.currentRoom].desc;
+	            } else {
+	                location = null;
+	            }
 	            return floors.map(function (floor, i) {
 	                var rooms = floor.rooms.map(function (room, j) {
 	                    var key = ((j + Math.random() * 100) * 9).toFixed(2);
+	                    var className = location === room.desc ? "highlight-floor" : "";
 	                    return _react2["default"].createElement(
 	                        "p",
-	                        { key: key, styleName: "roomName" },
+	                        { key: key, className: className, styleName: "roomName" },
 	                        room.desc
 	                    );
 	                });
@@ -23434,7 +23483,6 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"floorName":"_2EotZRbCRIBHuOFU-6Rf8w","roomName":"_3NCduS4qzUoKsRLKyigYrm","floor-select-btn":"_2p9shh0HToJCzrFAw3SgBS"};
 
 /***/ },
 /* 222 */
@@ -23460,7 +23508,8 @@
 
 	    return {
 	        selectedFloor: selectedFloor(state.selectedFloor, action),
-	        currentLocation: currentLocation(state.currentLocation, action)
+	        currentLocation: currentLocation(state.currentLocation, action),
+	        panicStatus: panicStatus(state.panicStatus, action)
 	    };
 	}
 
@@ -23477,11 +23526,23 @@
 	}
 
 	function currentLocation() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? { currentRoom: 0, currentFloor: 0 } : arguments[0];
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	    var action = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
 	    switch (action.type) {
 	        case "LOCATIONUPDATED":
+	            return action.state;
+	        default:
+	            return state;
+	    }
+	}
+
+	function panicStatus() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	    var action = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	    switch (action.type) {
+	        case "PANICSTATUSUPDATED":
 	            return action.state;
 	        default:
 	            return state;
@@ -24087,8 +24148,10 @@
 	});
 	exports.selectedFloor = selectedFloor;
 	exports.currentLocation = currentLocation;
+	exports.panicStatus = panicStatus;
 	var SELECTEDFLOORUPDATED = "SELECTEDFLOORUPDATED";
 	var LOCATIONUPDATED = "LOCATIONUPDATED";
+	var PANICSTATUSUPDATED = "PANICSTATUSUPDATED";
 
 	function selectedFloor(data) {
 	    return { state: data, type: SELECTEDFLOORUPDATED };
@@ -24096,6 +24159,10 @@
 
 	function currentLocation(data) {
 	    return { state: data, type: LOCATIONUPDATED };
+	}
+
+	function panicStatus(data) {
+	    return { state: data, type: PANICSTATUSUPDATED };
 	}
 
 /***/ },
@@ -24134,9 +24201,7 @@
 
 	var _storeStore2 = _interopRequireDefault(_storeStore);
 
-	var _HomeTrackerFakeData = __webpack_require__(291);
-
-	var _HomeTrackerFakeData2 = _interopRequireDefault(_HomeTrackerFakeData);
+	//import FakeData from "./HomeTrackerFakeData";
 
 	var HomeTracker = (function (_React$Component) {
 	    _inherits(HomeTracker, _React$Component);
@@ -24181,7 +24246,6 @@
 	        value: function createRooms() {
 	            var _this2 = this;
 
-	            console.log("this.state.selectedFloor", this.state.selectedFloor);
 	            var index = this.state.selectedFloor;
 	            var style = { marginLeft: -(this.state.houseConfig.floors[index].rooms.length * 50) + "px" };
 	            return this.state.houseConfig.floors[index].rooms.map(function (room, i) {
@@ -24221,10 +24285,7 @@
 	                        "div",
 	                        { styleName: "home-map-holder" },
 	                        this.createRooms()
-	                    ),
-	                    _react2["default"].createElement(_HomeTrackerFakeData2["default"], {
-	                        houseConfig: this.state.houseConfig
-	                    })
+	                    )
 	                );
 	            }
 	        }
@@ -24241,81 +24302,9 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"home-map-holder":"sm9eC8es2fGlGzGWDdp9j","cube":"_2WdAFCrMm9Yhrzylx_Fmva","side":"_3RJAfhaNyPZkHOt3sc9Kgf","front":"_2Pg82Is1gyRy5uo1NgKusj","top":"_1YjaUnKpLulj9NQUGLxS8n","right":"_1uXCXVVXLcyMvCC9ngyF7K","left":"_1Cswfil-QNF9Bafw9BQsw7","bottom":"_25Wx_NYh2KN1wnYT6mVD2Z","back":"_1CvDKiovLspVpp-z8kYRDs"};
 
 /***/ },
 /* 236 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-	exports.getHouseConfig = getHouseConfig;
-
-	function getHouseConfig() {
-	    return fetch('/data/house-config.json').then(function (response) {
-	        return response.json();
-	    });
-	}
-
-/***/ },
-/* 237 */,
-/* 238 */,
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */,
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */,
-/* 248 */,
-/* 249 */,
-/* 250 */,
-/* 251 */,
-/* 252 */,
-/* 253 */,
-/* 254 */,
-/* 255 */,
-/* 256 */,
-/* 257 */,
-/* 258 */,
-/* 259 */,
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */,
-/* 268 */,
-/* 269 */,
-/* 270 */,
-/* 271 */,
-/* 272 */,
-/* 273 */,
-/* 274 */,
-/* 275 */,
-/* 276 */,
-/* 277 */,
-/* 278 */,
-/* 279 */,
-/* 280 */,
-/* 281 */,
-/* 282 */,
-/* 283 */,
-/* 284 */,
-/* 285 */,
-/* 286 */,
-/* 287 */,
-/* 288 */,
-/* 289 */,
-/* 290 */,
-/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24338,76 +24327,105 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactCssModules = __webpack_require__(158);
-
-	var _reactCssModules2 = _interopRequireDefault(_reactCssModules);
-
-	var _hometrackerStyles = __webpack_require__(235);
-
-	var _hometrackerStyles2 = _interopRequireDefault(_hometrackerStyles);
-
 	var _storeStore = __webpack_require__(223);
 
 	var _storeStore2 = _interopRequireDefault(_storeStore);
 
 	var _actionsHomeTrackerActions = __webpack_require__(233);
 
-	var FakeData = (function (_React$Component) {
-	    _inherits(FakeData, _React$Component);
+	var SocketClient = (function (_React$Component) {
+	    _inherits(SocketClient, _React$Component);
 
-	    function FakeData(props) {
-	        _classCallCheck(this, FakeData);
+	    function SocketClient(props) {
+	        var _arguments2 = arguments,
+	            _this = this;
 
-	        _get(Object.getPrototypeOf(FakeData.prototype), "constructor", this).call(this, props);
+	        _classCallCheck(this, SocketClient);
+
+	        _get(Object.getPrototypeOf(SocketClient.prototype), "constructor", this).call(this, props);
+	        console.log(props);
 	        this.state = {
-	            houseConfig: this.props.houseConfig,
-	            selectedFloor: _storeStore2["default"].getState().selectedFloor,
-	            currentLocation: _storeStore2["default"].getState().currentLocation
+	            houseConfig: this.props.houseConfig
 	        };
-	        _storeStore2["default"].subscribe(this.onStoreUpdate.bind(this));
-	        this.startFakingData();
+
+	        var baseUrl = "http://bc3b255d.ngrok.io/";
+	        console.log("calling $.hubConnection()");
+	        var hubConnection = $.hubConnection();
+
+	        console.log("hubConnection.url: ", hubConnection.url);
+	        hubConnection.url = baseUrl + "/signalr";
+	        console.log("hubConnection.url: ", hubConnection.url);
+	        hubConnection.logging = true;
+
+	        console.log("calling hubConnection.createHubProxy('notifier')");
+	        var hubProxy = hubConnection.createHubProxy("notifier");
+
+	        hubProxy.on("message", function (message) {
+	            console.log("hubProxy.on('message')");
+	            console.log(_arguments2);
+	        });
+
+	        hubProxy.on("roomUpdate", function (roomId) {
+	            console.log("hubProxy.on('message')");
+	            console.log(_arguments2);
+	            _this.onRoomUpdate(roomId);
+	        });
+
+	        hubProxy.on("panic", function (message) {
+	            console.log("hubProxy.on('message')");
+	            console.log(_arguments2);
+	            _storeStore2["default"].dispatch((0, _actionsHomeTrackerActions.panicStatus)(true));
+	        });
+
+	        hubProxy.on("panicOver", function (message) {
+	            console.log("hubProxy.on('message')");
+	            console.log(_arguments2);
+	            _storeStore2["default"].dispatch((0, _actionsHomeTrackerActions.panicStatus)(false));
+	        });
+
+	        hubConnection.start().done(function (connection) {
+	            console.log("hubConnection done");
+	            console.log(arguments);
+	        }).fail(function (reason) {
+	            console.log("hubConnection fail");
+	            console.log(arguments);
+	        });
 	    }
 
-	    _createClass(FakeData, [{
-	        key: "onStoreUpdate",
-	        value: function onStoreUpdate() {
-	            this.setState({
-	                selectedFloor: _storeStore2["default"].getState().selectedFloor,
-	                currentLocation: _storeStore2["default"].getState().currentLocation
-	            });
+	    _createClass(SocketClient, [{
+	        key: "componentWillReceiveProps",
+	        value: function componentWillReceiveProps(nextProps) {
+	            if (Object.keys(nextProps.houseConfig).length) {
+	                this.setState({
+	                    houseConfig: nextProps.houseConfig
+	                });
+	            }
 	        }
 	    }, {
-	        key: "startFakingData",
-	        value: function startFakingData() {
-	            var _this = this;
-
-	            var timer = setInterval(function () {
-
-	                var currentFloor = Number(_this.state.currentLocation.currentFloor);
-	                var currentRoom = Number(_this.state.currentLocation.currentRoom);
-	                var maxRoomOnThisFloor = _this.state.houseConfig.floors[currentFloor].rooms.length - 1;
-	                var maxFloor = _this.state.houseConfig.floors.length - 1;
-	                var nextFloor = undefined,
-	                    nextRoom = undefined;
-
-	                if (currentRoom + 1 > maxRoomOnThisFloor) {
-	                    nextRoom = 0;
-	                    if (currentFloor === maxFloor) {
-	                        nextFloor = 0;
-	                    } else {
-	                        nextFloor = currentFloor + 1;
+	        key: "onRoomUpdate",
+	        value: function onRoomUpdate(roomId) {
+	            var roomIndex = undefined;
+	            var floor = undefined;
+	            var floors = this.state.houseConfig.floors;
+	            var rooms = floors.map(function (floor) {
+	                return floor.rooms;
+	            });
+	            var ids = [];
+	            rooms.forEach(function (room, i) {
+	                if (!ids.length) {
+	                    ids = room.filter(function (r, j) {
+	                        if (Number(r.id) === roomId) {
+	                            roomIndex = j;
+	                            return r;
+	                        }
+	                    });
+	                    if (ids.length) {
+	                        floor = i;
 	                    }
-	                } else {
-	                    nextRoom = currentRoom + 1;
-	                    nextFloor = currentFloor;
 	                }
-
-	                _storeStore2["default"].dispatch((0, _actionsHomeTrackerActions.selectedFloor)(nextFloor));
-	                _storeStore2["default"].dispatch((0, _actionsHomeTrackerActions.currentLocation)({
-	                    currentRoom: nextRoom,
-	                    currentFloor: nextFloor
-	                }));
-	            }, 2500);
+	            });
+	            _storeStore2["default"].dispatch((0, _actionsHomeTrackerActions.currentLocation)({ currentRoom: roomIndex, currentFloor: floor }));
+	            _storeStore2["default"].dispatch((0, _actionsHomeTrackerActions.selectedFloor)(floor));
 	        }
 	    }, {
 	        key: "render",
@@ -24416,11 +24434,28 @@
 	        }
 	    }]);
 
-	    return FakeData;
+	    return SocketClient;
 	})(_react2["default"].Component);
 
-	exports["default"] = FakeData;
+	exports["default"] = SocketClient;
 	module.exports = exports["default"];
+
+/***/ },
+/* 237 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	exports.getHouseConfig = getHouseConfig;
+
+	function getHouseConfig() {
+	    return fetch('/data/house-config.json').then(function (response) {
+	        return response.json();
+	    });
+	}
 
 /***/ }
 /******/ ]);
