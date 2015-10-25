@@ -23,7 +23,7 @@ class HomeTrackerInfo extends React.Component {
             isPaniced : HomeTrackerStore.getState().panicStatus,
             hasLoaded : false,
             occupantLocation : location,
-            beatsPerMinute : null,
+            beatsPerMinute : HomeTrackerStore.getState().heartBeat,
             selectedFloor : HomeTrackerStore.getState().selectedFloor
         };
         HomeTrackerStore.subscribe(this.onStoreUpdate.bind(this));
@@ -42,7 +42,8 @@ class HomeTrackerInfo extends React.Component {
             this.setState({
                 occupantLocation : location,
                 selectedFloor : HomeTrackerStore.getState().selectedFloor,
-                isPaniced : HomeTrackerStore.getState().panicStatus
+                isPaniced : HomeTrackerStore.getState().panicStatus,
+                beatsPerMinute : HomeTrackerStore.getState().heartBeat
             });
         }
     }
@@ -142,7 +143,6 @@ class HomeTrackerInfo extends React.Component {
     }
 
     render() {
-        let output;
         if(!this.state.hasLoaded) {
             return (HomeTrackerInfo.getAwaitingDataMsg());
         }

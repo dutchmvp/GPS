@@ -42,8 +42,8 @@ export default class FakeData extends React.Component {
             }
             else {
 
-                let currentFloor = Number(this.state.currentLocation.currentFloor);
-                let currentRoom = Number(this.state.currentLocation.currentRoom);
+                let currentFloor = Number(this.state.currentLocation.currentFloor) || 0;
+                let currentRoom = Number(this.state.currentLocation.currentRoom) || 0;
                 let maxRoomOnThisFloor = this.state.houseConfig.floors[currentFloor].rooms.length - 1;
                 let maxFloor = this.state.houseConfig.floors.length - 1;
                 let nextFloor, nextRoom;

@@ -1,6 +1,6 @@
 import React from "react";
 import HomeTrackerStore from "../store/Store";
-import { panicStatus, currentLocation, selectedFloor } from "../actions/home-tracker-actions";
+import { panicStatus, currentLocation, selectedFloor, heartBeat } from "../actions/home-tracker-actions";
 
 export default class SocketClient extends React.Component {
 
@@ -32,6 +32,13 @@ export default class SocketClient extends React.Component {
             console.log("hubProxy.on('message')");
             console.log(arguments);
             this.onRoomUpdate(roomId);
+        });
+
+        hubProxy.on("heartRateUpdate", beats => {
+            console.log("hubProxy.on('message')");
+            console.log(arguments);
+            console.log("HEARTBEATZ!!");
+            HomeTrackerStore.dispatch(heartBeat(beats));
         });
 
         hubProxy.on("panic", message => {
@@ -89,7 +96,6 @@ export default class SocketClient extends React.Component {
         });
         HomeTrackerStore.dispatch(currentLocation({ currentRoom : roomIndex, currentFloor : floor }));
         HomeTrackerStore.dispatch(selectedFloor(floor));
-
     }
 
     render(){
