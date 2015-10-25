@@ -99,7 +99,7 @@ api/client/panicover
 ### Backend Server to Monitoring Client API over SignalR
 
 ```
-function roomUpdate(room);
+function roomUpdate(roomId);
 function heartRateUpdate(heartRate);
 function panic();
 function panicOver();
@@ -187,6 +187,7 @@ api/volunteers/availability
 ```
 
 ## Occupant Location
+
 #### Property details (GET)
 
 ```
