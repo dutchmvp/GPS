@@ -1,6 +1,6 @@
 .floor-selected {
   transition: background-color 1s ease;
-  background-color: #818181;
+  background-color: rgba(0,0,255, .25);
 }
 
 .footer {
@@ -16,4 +16,14 @@ p.event {
 
 .current-room > div {
   background-color: rgba(0,0,255, .25);
+}
+
+.highlight-floor {
+  background-color: rgba(0,0,255, .25);
+  width: 75px;
+  padding: 5px;
+}
+
+.danger {
+  color: coral;
 }

@@ -10,7 +10,7 @@ class HomeTrackerInfo extends React.Component {
     constructor(props){
         super(props);
         let location;
-        if(Object.keys(this.props.houseConfig).length){
+        if(Object.keys(this.props.houseConfig).length) {
             let current = HomeTrackerStore.getState().currentLocation;
             location = this.props.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
         }
@@ -20,6 +20,7 @@ class HomeTrackerInfo extends React.Component {
 
         this.state = {
             houseConfig : this.props.houseConfig,
+            isPaniced : HomeTrackerStore.getState().panicStatus,
             hasLoaded : false,
             occupantLocation : location,
             beatsPerMinute : null,
@@ -34,7 +35,8 @@ class HomeTrackerInfo extends React.Component {
             let location = this.props.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
             this.setState({
                 occupantLocation : location,
-                selectedFloor : HomeTrackerStore.getState().selectedFloor
+                selectedFloor : HomeTrackerStore.getState().selectedFloor,
+                isPaniced : HomeTrackerStore.getState().panicStatus
             });
         }
     }
@@ -61,8 +63,15 @@ class HomeTrackerInfo extends React.Component {
             return a.length + b.length;
         });
         let housePlan = this.createHousePlan();
+        let panicStatus = this.state.isPaniced ? <span styleName="panic-active"><br />WARNING: PANIC ACTIVATED</span> : "inactive";
+        if(this.state.isPaniced){
+            document.body.classList.add("danger");
+        }
+        else {
+            document.body.classList.remove("danger");
+        }
         return (
-            <div>
+            <div styleName="info-holder">
                 <h2>Occupant Info</h2>
                 <p><strong>Name:</strong> { this.state.houseConfig.occupant }</p>
                 <p><strong>Num of rooms:</strong> { numOfRooms }</p>
@@ -71,6 +80,7 @@ class HomeTrackerInfo extends React.Component {
                 <hr />
                 <p><strong>Occupant location:</strong> { (this.state.occupantLocation || "awaiting positional data") }</p>
                 <p><strong>Heartbeat</strong> { (this.state.beatsPerMinute || "awaiting data") }</p>
+                <p><strong>Panic status:</strong> { panicStatus }</p>
                 <hr />
                 <h2>Floor Select</h2>
                 { this.createFloorSelectButtons() }
@@ -80,10 +90,13 @@ class HomeTrackerInfo extends React.Component {
 
     createHousePlan() {
         let floors = this.state.houseConfig.floors;
+        let current = HomeTrackerStore.getState().currentLocation;
+        let location = floors[current.currentFloor].rooms[current.currentRoom].desc;
         return floors.map((floor, i) => {
             let rooms = floor.rooms.map((room, j) => {
                 let key = ((j+(Math.random() * 100)) * 9).toFixed(2);
-                return (<p key={key} styleName="roomName">{ room.desc }</p>)
+                let className = location === room.desc ? "highlight-floor" : "";
+                return (<p key={key} className={className}  styleName="roomName">{ room.desc }</p>)
             });
             let key = ((i+(Math.random() * 1000)) * 10).toFixed(2);
             return (

@@ -1,5 +1,6 @@
 .floorName { font-weight: bold }
 .roomName { margin-left: 20px }
+.info-holder { border-left: 1px solid #ededed; padding-left: 15px }
 .floor-select-btn {
   width: 50px;
   height: 50px;
@@ -8,6 +9,25 @@
   cursor: pointer;
   transition: background-color 1s ease;
   &:hover {
-    background-color: darken(#ededed, 20%);
+    background-color: darken(#ededed, 5%);
   }
+}
+.panic-active {
+  color: red;
+  font-weight: bold;
+  -webkit-animation: pulsate 0.5s ease-out;
+  -webkit-animation-iteration-count: infinite;
+  position: relative;
+  z-index: 2;
+  > span {
+    margin-left: 40px;
+  }
+}
+@-webkit-keyframes pulsate {
+  0% {-webkit-transform: scale(1, 1); opacity: 0.5;}
+  100% {-webkit-transform: scale(1.5, 1.5); opacity: 1;}
+}
+@keyframes pulsate {
+  0% {transform: scale(1, 1); opacity: 0.5;}
+  100% {transform: scale(1.5, 1.5); opacity: 1;}
 }

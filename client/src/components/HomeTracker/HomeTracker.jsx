@@ -36,7 +36,6 @@ class HomeTracker extends React.Component {
 
 
     createRooms() {
-        console.log("this.state.selectedFloor", this.state.selectedFloor);
         let index = this.state.selectedFloor;
         let style = { marginLeft : -(this.state.houseConfig.floors[index].rooms.length * 50) + "px" };
         return this.state.houseConfig.floors[index].rooms.map((room, i) => {
