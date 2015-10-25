@@ -48,7 +48,7 @@ Temporary Items
 .apdisk
 
 node_modules
-client/build/js
 .idea
-build
+client/build/js
+client/build/styles
 *.txt

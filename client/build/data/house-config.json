@@ -5,26 +5,26 @@
   "floors" : [{
     "desc" : "Ground-floor",
     "rooms" : [{
-      "id" : "ydhsjfhsdkf",
+      "id" : "1",
       "desc": "Lounge",
       "beaconId" : "blah"
     }, {
-      "id" : "ydhsfdfsdkf",
+      "id" : "2",
       "desc": "Kitchen",
       "beaconId" : "blah2"
     }]
     }, {
     "desc" : "First-floor",
     "rooms" :  [{
-      "id" : "dsfhsdkf",
+      "id" : "3",
       "desc": "Bathroom",
       "beaconId" : "blah"
     }, {
-    "id" : "hbnjkkd",
+    "id" : "4",
     "desc": "Bedroom",
     "beaconId" : "blah2"
     }, {
-    "id" : "hbnjkkd",
+    "id" : "5",
     "desc": "Landing",
     "beaconId2" : "blah2"
     }]
