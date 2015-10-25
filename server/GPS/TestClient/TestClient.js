@@ -12,7 +12,7 @@
             return Math.floor((new Date()).getTime() / 1000);
         };
 
-        var getJson = function(path) {
+        var getJson = function(path, data) {
             return $.ajax({
                 url: baseUrl + path,
                 method: "GET"
@@ -150,6 +150,26 @@
                 console.log(arguments);
             });
 
+            hubProxy.on("roomUpdate", function (roomId) {
+                console.log("hubProxy.on('roomUpdate')");
+                console.log(arguments);
+            });
+
+            hubProxy.on("heartRateUpdate", function (heartRate) {
+                console.log("hubProxy.on('heartRateUpdate')");
+                console.log(arguments);
+            });
+
+            hubProxy.on("panic", function () {
+                console.log("hubProxy.on('panic')");
+                console.log(arguments);
+            });
+
+            hubProxy.on("panicover", function () {
+                console.log("hubProxy.on('panicover')");
+                console.log(arguments);
+            });
+
             hubConnection
                 .start()
                 .done(function (connection) {
@@ -163,5 +183,23 @@
         };
 
         connectHub();
+
+        $("#btnSignalRRoomUpdate").click(function () {
+            var roomId = $("#roomNumber").val();
+            getJson("api/testnotifier/roomupdate/" + roomId);
+        });
+
+        $("#btnSignalRHeartRateUpdate").click(function () {
+            var heartRate = $("#heartRate").val();
+            getJson("api/testnotifier/heartrateupdate/" + heartRate);
+        });
+
+        $("#btnSignalRPanic").click(function () {
+            getJson("api/testnotifier/panic");
+        });
+
+        $("#btnSignalRPanicOver").click(function () {
+            getJson("api/testnotifier/panicover");
+        });
     });
 }());

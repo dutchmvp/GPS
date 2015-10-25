@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNet.SignalR;
+﻿using Microsoft.AspNet.SignalR;
 
 namespace GpsBackend.SignalR
 {
@@ -8,19 +7,31 @@ namespace GpsBackend.SignalR
         public void Message(string message)
         {
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<Notifier>();
-            var client = hubContext.Clients.All.message(message);
+            hubContext.Clients.All.message(message);
         }
 
-        public void Message(string connectionId, string message)
-        {
-            InvokeClientMethod(connectionId, client => client.message(message));
-        }
-
-        private static void InvokeClientMethod(string connectionId, Action<dynamic> action)
+        public void RoomUpdate(int roomId)
         {
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<Notifier>();
-            var client = hubContext.Clients.Client(connectionId);
-            action(client);
+            hubContext.Clients.All.roomUpdate(roomId);
+        }
+
+        public void HeartRateUpdate(int heartRate)
+        {
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<Notifier>();
+            hubContext.Clients.All.heartRateUpdate(heartRate);
+        }
+
+        public void Panic()
+        {
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<Notifier>();
+            hubContext.Clients.All.panic();
+        }
+
+        public void PanicOver()
+        {
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<Notifier>();
+            hubContext.Clients.All.panicOver();
         }
     }
 }

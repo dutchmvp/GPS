@@ -7,26 +7,43 @@
     <script src="TestClient.js"></script>
 </head>
 <body>
-    <h1>Client REST API</h1>
-    <button id="btnClientLocation">Location</button>
-    <br/>
-    <button id="btnClientHeartRate">HeartRate</button>
-    <br />
-    <button id="btnClientPanic">Panic</button>
-    <br />
-    <button id="btnClientPanicOver">PanicOver</button>
-    <hr/>
-    <h1>Volunteer Portal REST API</h1>
-    <button id="btnVolunteerGetAll">Get All</button>
-    <br />
-    <button id="btnVolunteerGet">Get</button>
-    <br />
-    <button id="btnVolunteerRegister">Register</button>
-    <br />
-    <button id="btnVolunteerLogin">Login</button>
-    <br />
-    <button id="btnVolunteerSetAvailabilityTrue">SetAvailability True</button>
-    <br />
-    <button id="btnVolunteerSetAvailabilityFalse">SetAvailability False</button>
+
+<h1>Client REST API</h1>
+<button id="btnClientLocation">Location</button>
+<br/>
+<button id="btnClientHeartRate">HeartRate</button>
+<br/>
+<button id="btnClientPanic">Panic</button>
+<br/>
+<button id="btnClientPanicOver">PanicOver</button>
+
+<hr/>
+
+<h1>Volunteer Portal REST API</h1>
+<button id="btnVolunteerGetAll">Get All</button>
+<br/>
+<button id="btnVolunteerGet">Get</button>
+<br/>
+<button id="btnVolunteerRegister">Register</button>
+<br/>
+<button id="btnVolunteerLogin">Login</button>
+<br/>
+<button id="btnVolunteerSetAvailabilityTrue">SetAvailability True</button>
+<br/>
+<button id="btnVolunteerSetAvailabilityFalse">SetAvailability False</button>
+
+<hr/>
+<h1>Trigger SignalR Messages</h1>
+<br/>
+<input id="roomNumber" type="text" />
+<button id="btnSignalRRoomUpdate">Room Update</button>
+<br/>
+<input id="heartRate" type="text" />
+<button id="btnSignalRHeartRateUpdate">Heart Rate Update</button>
+<br/>
+<button id="btnSignalRPanic">Panic</button>
+<br/>
+<button id="btnSignalRPanicOver">Panic Over</button>
+
 </body>
 </html>
