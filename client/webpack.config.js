@@ -25,10 +25,13 @@ module.exports = {
             loader: "babel-loader"
         }, {
             test: /\.scss$|\.css$/,
-            exclude : /global\.scss$/,
+            exclude : /global\.scss$|timeline.css/,
             loader: ExtractTextPlugin.extract("style-loader", "css-loader?modules!sass")
         }, {
             test: /global\.scss$/,
+            loader: ExtractTextPlugin.extract("style-loader", "css-loader?sass")
+        }, {
+            test: /timeline\.css$/,
             loader: ExtractTextPlugin.extract("style-loader", "css-loader?sass")
         }, {
             test: /\.(png|woff|woff2|eot|ttf|svg|json)$/,

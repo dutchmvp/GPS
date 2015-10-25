@@ -24336,8 +24336,7 @@
 	                        "div",
 	                        { styleName: "home-map-holder" },
 	                        this.createRooms()
-	                    ),
-	                    _react2["default"].createElement(_HomeTrackerFakeData2["default"], { houseConfig: this.state.houseConfig })
+	                    )
 	                );
 	            }
 	        }

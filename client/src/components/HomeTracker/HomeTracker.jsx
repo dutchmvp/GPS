@@ -65,7 +65,6 @@ class HomeTracker extends React.Component {
                     <div styleName="home-map-holder">
                         { this.createRooms() }
                     </div>
-                    <FakeData houseConfig={this.state.houseConfig} />
                 </div>
             );
         }

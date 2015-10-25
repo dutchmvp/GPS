@@ -24437,7 +24437,6 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"timeline":"_1l_RwZOKugzFRHlrZ7ImCh","timeline-panel":"_3VXOTGf733SyBVwRFKM_9x","timeline-badge":"_3hRrO0F8ASC3uiNKQ4KvBF","timeline-inverted":"_1WGC5L1OK_mp-jnpxjvXwm","primary":"_3tVyIKdb3rlXKEwlqvnVRi","success":"_2hWBaIHkdJMKbBOv-Fr7G7","warning":"_3guNyjV_l1n2eZBM4K2Hch","danger":"_3JgnReWwfAIm9T1BErHmBE","info":"_1KcRohhhUFBXCkqgoyPmVi","timeline-title":"_2R36eDN0gXHCo0YlSVGMDJ","timeline-body":"pfhd0EEIMYbARvDRYLsRv"};
 
 /***/ },
 /* 288 */
@@ -24555,6 +24554,19 @@
 		_createClass(TimelineDanger, [{
 			key: 'render',
 			value: function render() {
+				var textMessage = _react2['default'].createElement(
+					'p',
+					null,
+					'Mrs Granny Smith\'s heart rate fell below 50bpm for 1 hour at 11:00pm'
+				);
+
+				if (this.props.inverted) {
+					textMessage = _react2['default'].createElement(
+						'p',
+						null,
+						'Mrs Granny Smith has left her geo-fenced area'
+					);
+				}
 				return _react2['default'].createElement(
 					'li',
 					{ className: this.props.inverted ? 'timeline-inverted' : '' },
@@ -24574,11 +24586,7 @@
 						_react2['default'].createElement(
 							'div',
 							{ className: 'timeline-body' },
-							_react2['default'].createElement(
-								'p',
-								null,
-								'Mrs Granny Smith\'s heart rate fell below 50bpm for 1 hour at 11:00pm'
-							)
+							textMessage
 						)
 					)
 				);
