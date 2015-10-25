@@ -185,3 +185,41 @@ api/volunteers/availability
     "available": true
 }
 ```
+
+## Occupant Location
+#### Property details (GET)
+
+```
+{
+  "id" : "1234567890",
+  "occupant" : "Mrs Granny Smith",
+  "latLong" : ["53.555862", "-2.507091"],
+  "floors" : [{
+    "desc" : "Ground-floor",
+    "rooms" : [{
+      "id" : "ydhsjfhsdkf",
+      "desc": "Lounge",
+      "beaconId" : "someidstring"
+    }, {
+      "id" : "ydhsfdfsdkf",
+      "desc": "Kitchen",
+      "beaconId" : "someidstring"
+    }]
+    }, {
+    "desc" : "First-floor",
+    "rooms" :  [{
+      "id" : "dsfhsdkf",
+      "desc": "Bathroom",
+      "beaconId" : "someidstring"
+    }, {
+    "id" : "hbnjkkd",
+    "desc": "Bedroom",
+    "beaconId" : "someidstring"
+    }, {
+    "id" : "hbnjkkd",
+    "desc": "Landing",
+    "beaconId2" : "someidstring"
+    }]
+  }]
+}
+```
