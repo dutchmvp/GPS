@@ -100,7 +100,7 @@ api/client/panicover
 
 ```
 function roomUpdate(roomId);
-function heartRateUpdate(heartRate);
+function heartRateUpdate(heartRate, timestamp);
 function panic();
 function panicOver();
 ```

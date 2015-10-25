@@ -2,6 +2,6 @@
 {
     public class HeartRateRequest : ClientBaseRequest
     {
-        public int HeartRate { get; set; }
+        public double HeartRate { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Web.Http;
 using GpsBackend.Models;
@@ -38,7 +39,14 @@ namespace GpsBackend.Controllers
                     Debug.WriteLine($"{location.Locations[i].Strength}");
                 }
             }
+
             LocationRequests.Add(location);
+            var notifier = new Notifier();
+            var roomId = 1;
+            var x = location.Locations?.FirstOrDefault(l => l.MajorNumber == 56279 && l.MinorNumber == 21017);
+            if (x != null) roomId = 2;
+            notifier.RoomUpdate(roomId);
+
             return Content(HttpStatusCode.OK, new {});
         }
 
@@ -46,14 +54,23 @@ namespace GpsBackend.Controllers
         [HttpPost]
         public IHttpActionResult HeartRate(HeartRateRequest heartRate)
         {
+            Debug.WriteLine("HeartRate");
+            Debug.WriteLine($"{heartRate.Id}");
+            Debug.WriteLine($"{heartRate.Timestamp}");
+            Debug.WriteLine($"{heartRate.HeartRate}");
             HeartRateRequests.Add(heartRate);
+            var notifier = new Notifier();
+            notifier.HeartRateUpdate(heartRate.HeartRate, heartRate.Timestamp);
             return Content(HttpStatusCode.OK, new { });
         }
 
         [Route("panic")]
         [HttpPost]
-        public IHttpActionResult PanicButton(PanicRequest panic)
+        public IHttpActionResult Panic(PanicRequest panic)
         {
+            Debug.WriteLine("Panic");
+            Debug.WriteLine($"{panic.Id}");
+            Debug.WriteLine($"{panic.Timestamp}");
             var notifier = new Notifier();
             notifier.Panic();
             SmsProvider.SendSmsToVolunteer(1);
@@ -64,6 +81,9 @@ namespace GpsBackend.Controllers
         [HttpPost]
         public IHttpActionResult PanicOver(PanicOverRequest panicOver)
         {
+            Debug.WriteLine("PanicOver");
+            Debug.WriteLine($"{panicOver.Id}");
+            Debug.WriteLine($"{panicOver.Timestamp}");
             var notifier = new Notifier();
             notifier.PanicOver();
             return Content(HttpStatusCode.OK, new { });

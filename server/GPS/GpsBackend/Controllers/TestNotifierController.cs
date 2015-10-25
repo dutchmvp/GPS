@@ -24,12 +24,12 @@ namespace GpsBackend.Controllers
             return Ok();
         }
 
-        [Route("heartrateupdate/{heartRate}")]
+        [Route("heartrateupdate/{heartRate}/{timestamp}")]
         [HttpGet]
-        public IHttpActionResult HeartRateUpdate(int heartRate)
+        public IHttpActionResult HeartRateUpdate(int heartRate, int timestamp)
         {
             var notifier = new Notifier();
-            notifier.HeartRateUpdate(heartRate);
+            notifier.HeartRateUpdate(heartRate, timestamp);
             return Ok();
         }
 

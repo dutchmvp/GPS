@@ -12,7 +12,7 @@
             return Math.floor((new Date()).getTime() / 1000);
         };
 
-        var getJson = function(path, data) {
+        var getJson = function(path) {
             return $.ajax({
                 url: baseUrl + path,
                 method: "GET"
@@ -191,7 +191,7 @@
 
         $("#btnSignalRHeartRateUpdate").click(function () {
             var heartRate = $("#heartRate").val();
-            getJson("api/testnotifier/heartrateupdate/" + heartRate);
+            getJson("api/testnotifier/heartrateupdate/" + heartRate + "/" + getTimestamp());
         });
 
         $("#btnSignalRPanic").click(function () {
