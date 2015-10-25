@@ -8,7 +8,7 @@ import App from './VolunteerPortal/App';
 // pages
 import Dashboard from './VolunteerPortal/Dashboard';
 import Details from './VolunteerPortal/Dashboard/Details';
-import Alerts from './VolunteerPortal/Dashboard/Alerts';
+import Volunteers from './VolunteerPortal/Dashboard/Volunteers';
 
 import Register from './VolunteerPortal/RegisterLogin/Register';
 import Login from './VolunteerPortal/RegisterLogin/Login';
@@ -21,7 +21,7 @@ let routes = (
         <Route name="register" path="/register" handler={Register} />
         <Route name="logout" path="/logout" handler={Logout}/>
         <Route name="details" path="/details" handler={Details}/>
-        <Route name="alerts" path="/alerts" handler={Alerts}/>
+        <Route name="volunteers" path="/volunteers" handler={Volunteers}/>
     </Route>
 );
 

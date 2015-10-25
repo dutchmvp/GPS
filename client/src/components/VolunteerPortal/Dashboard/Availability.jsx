@@ -28,7 +28,7 @@ class Avialability extends AuthenticatedRoute {
 			availability = 'You are currently not availabile for calls';
 
 		if (currentAvailability) {
-			availability = 'You are current availabile for calls';
+			availability = 'You are currently availabile for calls';
 		}
 
 		return (

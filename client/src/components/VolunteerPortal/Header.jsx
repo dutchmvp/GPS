@@ -20,7 +20,7 @@ class Header extends React.Component {
 
 			pageNavigation = (
 				<ul className="nav navbar-nav">
-					<li><Link to="alerts">Alerts</Link></li>
+					<li><Link to="volunteers">Volunteers</Link></li>
 				</ul>
 			)
 		}
