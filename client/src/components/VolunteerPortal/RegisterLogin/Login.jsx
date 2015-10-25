@@ -46,7 +46,7 @@ class Login extends UnAuthenticatedRoute {
 					</div>
 					<div className="form-group">
 						<label htmlFor="last-name">Password:</label>
-						<input type="password" className="form-control" id="password" />
+						<input type="password" className="form-control" id="passwordhash" />
 					</div>
 					<button type="submit" className="btn btn-default">Submit</button>
 				</form>

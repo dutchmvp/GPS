@@ -5,7 +5,7 @@ class Dashboard extends AuthenticatedRoute {
 	render() {
 		return (
 			<div className="container">
-				Dashboard
+				<p>Dashboard</p>
 			</div>
 		);
 	}

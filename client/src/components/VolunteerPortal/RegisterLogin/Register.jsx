@@ -50,7 +50,7 @@ class Register extends UnAuthenticatedRoute {
 					</div>
 					<div className="form-group">
 						<label htmlFor="postcode">Password:</label>
-						<input type="password" className="form-control" id="password" />
+						<input type="password" className="form-control" id="passwordhash" />
 					</div>
 					<div className="form-group">
 						<label htmlFor="first-name">First Name:</label>
