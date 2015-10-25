@@ -27,9 +27,6 @@ class Login extends UnAuthenticatedRoute {
 
 		if (evt.target.querySelectorAll('.has-error').length == 0) {
 			UserService.login(data).then((response) => {
-				// store user
-				localStorage.setItem('user', JSON.stringify(response));
-
 				// dashboard time
 				window.location = 'volunteer-portal.html';
 			});

@@ -1,16 +1,24 @@
 import React from 'react';
 import AuthenticatedRoute from '../Utils/AuthenticatedRoute';
 
+// services
+import UserService from '../../../actions/user-service';
+
 class Details extends AuthenticatedRoute {
+	constructor() {
+		super();
+		
+		this.user = UserService.getUser();
+	}
+
 	render() {
 		let allowed = ['FirstName', 'LastName', 'Email', 'PostCode']
-		let user = JSON.parse(localStorage.getItem('user'));
 		let details = [];
 
 		// filter user data to those that are applicable
-		for (var input in user) {
+		for (var input in this.user) {
 			if (allowed.indexOf(input) > -1) {
-				details.push(<li>{input}: {user[input]}</li>);
+				details.push(<li>{input}: {this.user[input]}</li>);
 			}
 		}
 
