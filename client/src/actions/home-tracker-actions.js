@@ -6,5 +6,5 @@ export function selectedFloor(data) {
 }
 
 export function currentLocation(data) {
-    return { state : data, type: SELECTEDFLOORUPDATED };
+    return { state : data, type: LOCATIONUPDATED };
 }

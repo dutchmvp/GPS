@@ -1,0 +1,63 @@
+import React from "react";
+import CSSModule from "react-css-modules";
+import styles from "./hometracker-styles";
+import HomeTrackerStore from "../../store/Store";
+import { currentLocation, selectedFloor } from "../../actions/home-tracker-actions";
+
+export default class FakeData extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            houseConfig : this.props.houseConfig,
+            selectedFloor : HomeTrackerStore.getState().selectedFloor,
+            currentLocation : HomeTrackerStore.getState().currentLocation
+        };
+        HomeTrackerStore.subscribe(this.onStoreUpdate.bind(this));
+        this.startFakingData();
+    }
+
+    onStoreUpdate() {
+        this.setState({
+            selectedFloor : HomeTrackerStore.getState().selectedFloor,
+            currentLocation : HomeTrackerStore.getState().currentLocation
+        });
+    }
+
+    startFakingData() {
+
+        let timer = setInterval(()=> {
+
+            let currentFloor = Number(this.state.currentLocation.currentFloor);
+            let currentRoom = Number(this.state.currentLocation.currentRoom);
+            let maxRoomOnThisFloor = this.state.houseConfig.floors[currentFloor].rooms.length - 1;
+            let maxFloor = this.state.houseConfig.floors.length - 1;
+            let nextFloor, nextRoom;
+
+            if(currentRoom + 1 > maxRoomOnThisFloor) {
+                nextRoom = 0;
+                if(currentFloor === maxFloor){
+                    nextFloor = 0;
+                }
+                else {
+                    nextFloor = currentFloor + 1;
+                }
+            }
+            else {
+                nextRoom = currentRoom + 1;
+                nextFloor = currentFloor;
+            }
+
+            HomeTrackerStore.dispatch(selectedFloor(nextFloor));
+            HomeTrackerStore.dispatch(currentLocation({
+                currentRoom : nextRoom,
+                currentFloor : nextFloor
+            }));
+
+        }, 2500);
+    }
+
+    render(){
+        return false;
+    }
+}

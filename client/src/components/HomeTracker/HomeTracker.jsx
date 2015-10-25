@@ -2,6 +2,7 @@ import React from "react";
 import CSSModule from "react-css-modules";
 import styles from "./hometracker-styles";
 import HomeTrackerStore from "../../store/Store";
+import FakeData from "./HomeTrackerFakeData";
 
 class HomeTracker extends React.Component {
     constructor(props) {
@@ -28,12 +29,14 @@ class HomeTracker extends React.Component {
 
     onStoreUpdate() {
         this.setState({
-            selectedFloor : HomeTrackerStore.getState().selectedFloor
+            selectedFloor : HomeTrackerStore.getState().selectedFloor,
+            currentLocation : HomeTrackerStore.getState().currentLocation
         })
     }
 
 
     createRooms() {
+        console.log("this.state.selectedFloor", this.state.selectedFloor);
         let index = this.state.selectedFloor;
         let style = { marginLeft : -(this.state.houseConfig.floors[index].rooms.length * 50) + "px" };
         return this.state.houseConfig.floors[index].rooms.map((room, i) => {
@@ -63,6 +66,9 @@ class HomeTracker extends React.Component {
                     <div styleName="home-map-holder">
                         { this.createRooms() }
                     </div>
+                    <FakeData
+                        houseConfig ={this.state.houseConfig}
+                    />
                 </div>
             );
         }

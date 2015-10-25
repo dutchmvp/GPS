@@ -22,7 +22,20 @@ class HomeTrackerInfo extends React.Component {
             houseConfig : this.props.houseConfig,
             hasLoaded : false,
             occupantLocation : location,
-            beatsPerMinute : null
+            beatsPerMinute : null,
+            selectedFloor : HomeTrackerStore.getState().selectedFloor
+        };
+        HomeTrackerStore.subscribe(this.onStoreUpdate.bind(this));
+    }
+
+    onStoreUpdate(){
+        if(Object.keys(this.state.houseConfig).length){
+            let current = HomeTrackerStore.getState().currentLocation;
+            let location = this.props.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
+            this.setState({
+                occupantLocation : location,
+                selectedFloor : HomeTrackerStore.getState().selectedFloor
+            });
         }
     }
 
@@ -84,7 +97,7 @@ class HomeTrackerInfo extends React.Component {
 
     createFloorSelectButtons(){
         return this.state.houseConfig.floors.map((floor, i) => {
-            let selected = i === 0 ? "floor-selected" : "";
+            let selected = i === Number(this.state.selectedFloor) ? "floor-selected" : "";
             return (
                 <div
                     data-floor={i}
