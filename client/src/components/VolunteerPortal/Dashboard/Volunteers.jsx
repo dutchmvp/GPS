@@ -54,7 +54,7 @@ class Volunteers extends AuthenticatedRoute {
 								<th>Lastname</th>
 								<th>Email</th>
 								<th>Post Code</th>
-								<th>Avialability</th>
+								<th>Availability</th>
 							</tr>
 						</thead>
 						<tbody>
