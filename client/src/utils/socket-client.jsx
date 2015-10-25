@@ -67,7 +67,7 @@ export default class SocketClient extends React.Component {
     }
 
     onRoomUpdate(roomId){
-        console.log("room id!", roomId);
+        let roomIndex;
         let floor;
         let floors = this.state.houseConfig.floors;
         let rooms = floors.map(floor => {
@@ -76,15 +76,19 @@ export default class SocketClient extends React.Component {
         let ids = [];
         rooms.forEach((room, i) => {
             if(!ids.length) {
-                ids = room.filter(r => Number(r.id) === roomId);
+                ids = room.filter((r, j) => {
+                    if(Number(r.id) === roomId) {
+                        roomIndex = j;
+                        return r;
+                    }
+                });
                 if(ids.length){
                     floor = i;
                 }
             }
         });
-        HomeTrackerStore.dispatch(currentLocation({ currentRoom : Number(ids[0].id) - 1, currentFloor : floor }));
+        HomeTrackerStore.dispatch(currentLocation({ currentRoom : roomIndex, currentFloor : floor }));
         HomeTrackerStore.dispatch(selectedFloor(floor));
-        console.log("rooms", ids, floor);
 
     }
 

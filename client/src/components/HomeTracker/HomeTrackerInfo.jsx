@@ -10,8 +10,8 @@ class HomeTrackerInfo extends React.Component {
     constructor(props){
         super(props);
         let location;
-        if(Object.keys(this.props.houseConfig).length) {
-            let current = HomeTrackerStore.getState().currentLocation;
+        let current = HomeTrackerStore.getState().currentLocation;
+        if(Object.keys(this.props.houseConfig).length && Object.keys(current).length) {
             location = this.props.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
         }
         else {
@@ -32,7 +32,13 @@ class HomeTrackerInfo extends React.Component {
     onStoreUpdate(){
         if(Object.keys(this.state.houseConfig).length){
             let current = HomeTrackerStore.getState().currentLocation;
-            let location = this.props.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
+            let location;
+            if(Object.keys(current).length){
+                location = this.props.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
+            }
+            else {
+                location = null;
+            }
             this.setState({
                 occupantLocation : location,
                 selectedFloor : HomeTrackerStore.getState().selectedFloor,
@@ -42,9 +48,15 @@ class HomeTrackerInfo extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){
+        let current = HomeTrackerStore.getState().currentLocation;
         if(Object.keys(nextProps.houseConfig).length) {
-            let current = HomeTrackerStore.getState().currentLocation;
-            let location = nextProps.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
+            let location;
+            if(Object.keys(current).length) {
+                location = nextProps.houseConfig.floors[current.currentFloor].rooms[current.currentRoom].desc;
+            }
+            else {
+                location = null;
+            }
             setTimeout(()=> {
                 this.setState({
                     hasLoaded : true,
@@ -91,7 +103,13 @@ class HomeTrackerInfo extends React.Component {
     createHousePlan() {
         let floors = this.state.houseConfig.floors;
         let current = HomeTrackerStore.getState().currentLocation;
-        let location = floors[current.currentFloor].rooms[current.currentRoom].desc;
+        let location;
+        if(Object.keys(current).length){
+            location = floors[current.currentFloor].rooms[current.currentRoom].desc;
+        }
+        else {
+            location = null;
+        }
         return floors.map((floor, i) => {
             let rooms = floor.rooms.map((room, j) => {
                 let key = ((j+(Math.random() * 100)) * 9).toFixed(2);

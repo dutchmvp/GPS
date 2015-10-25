@@ -17,7 +17,7 @@ function selectedFloor(state = 0, action = {}) {
     }
 }
 
-function currentLocation(state = { currentRoom : 0, currentFloor : 0 }, action = {}) {
+function currentLocation(state = {}, action = {}) {
     switch(action.type) {
         case "LOCATIONUPDATED" :
             return action.state;

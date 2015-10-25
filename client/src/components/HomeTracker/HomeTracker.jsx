@@ -2,7 +2,7 @@ import React from "react";
 import CSSModule from "react-css-modules";
 import styles from "./hometracker-styles";
 import HomeTrackerStore from "../../store/Store";
-import FakeData from "./HomeTrackerFakeData";
+//import FakeData from "./HomeTrackerFakeData";
 
 class HomeTracker extends React.Component {
     constructor(props) {
@@ -65,9 +65,6 @@ class HomeTracker extends React.Component {
                     <div styleName="home-map-holder">
                         { this.createRooms() }
                     </div>
-                    <FakeData
-                        houseConfig={ this.state.houseConfig }
-                    />
                 </div>
             );
         }
