@@ -10,6 +10,8 @@
 
     <div class="container"></div>
 
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
         <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>

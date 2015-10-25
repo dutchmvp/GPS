@@ -1,6 +1,7 @@
 import React from "react";
 import HomeTrackerInfo from "./HomeTracker/HomeTrackerInfo";
 import HomeTracker from "./HomeTracker/HomeTracker";
+import "../utils/socket-client";
 import { getHouseConfig } from "../utils/get-home-config";
 
 class HomeTrackerApp extends React.Component {
