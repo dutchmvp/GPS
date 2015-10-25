@@ -187,7 +187,7 @@ api/volunteers/availability
 ```
 
 ## Occupant Location
-### Property details (GET)
+#### Property details (GET)
 
 ```
 {
