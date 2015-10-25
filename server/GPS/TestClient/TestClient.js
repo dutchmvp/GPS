@@ -201,5 +201,10 @@
         $("#btnSignalRPanicOver").click(function () {
             getJson("api/testnotifier/panicover");
         });
+
+        $("#btnSignalRSms").click(function () {
+            var volunteerId = $("#volunteerId").val();
+            getJson("api/testnotifier/sms/" + volunteerId);
+        });
     });
 }());
