@@ -5,7 +5,8 @@ function HomeTracker(state = {}, action = {}) {
         selectedFloor : selectedFloor(state.selectedFloor, action),
         currentLocation : currentLocation(state.currentLocation, action),
         panicStatus : panicStatus(state.panicStatus, action),
-        heartBeat : heartBeat(state.heartBeat, action)
+        heartBeat : heartBeat(state.heartBeat, action),
+        lastHeartBeat : lastHeartBeat(state.lastHeartBeat, action)
     }
 }
 
@@ -39,6 +40,15 @@ function panicStatus(state = false, action = {}) {
 function heartBeat(state = null, action = {}) {
     switch(action.type) {
         case "HEARTBEATUPDATED" :
+            return action.state;
+        default :
+            return state;
+    }
+}
+
+function lastHeartBeat(state = null, action = {}) {
+    switch(action.type) {
+        case "LASTHEARTBEAT" :
             return action.state;
         default :
             return state;

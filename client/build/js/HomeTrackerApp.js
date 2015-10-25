@@ -68,11 +68,11 @@
 
 	var _HomeTrackerHomeTracker2 = _interopRequireDefault(_HomeTrackerHomeTracker);
 
-	var _utilsSocketClient = __webpack_require__(236);
+	var _utilsSocketClient = __webpack_require__(237);
 
 	var _utilsSocketClient2 = _interopRequireDefault(_utilsSocketClient);
 
-	var _utilsGetHomeConfig = __webpack_require__(237);
+	var _utilsGetHomeConfig = __webpack_require__(238);
 
 	var HomeTrackerApp = (function (_React$Component) {
 	    _inherits(HomeTrackerApp, _React$Component);
@@ -20563,7 +20563,8 @@
 	            isPaniced: _storeStore2["default"].getState().panicStatus,
 	            hasLoaded: false,
 	            occupantLocation: location,
-	            beatsPerMinute: null,
+	            beatsPerMinute: _storeStore2["default"].getState().heartBeat,
+	            lastHeartBeat: _storeStore2["default"].getState().lastHeartBeat,
 	            selectedFloor: _storeStore2["default"].getState().selectedFloor
 	        };
 	        _storeStore2["default"].subscribe(this.onStoreUpdate.bind(this));
@@ -20583,7 +20584,9 @@
 	                this.setState({
 	                    occupantLocation: _location,
 	                    selectedFloor: _storeStore2["default"].getState().selectedFloor,
-	                    isPaniced: _storeStore2["default"].getState().panicStatus
+	                    isPaniced: _storeStore2["default"].getState().panicStatus,
+	                    beatsPerMinute: _storeStore2["default"].getState().heartBeat,
+	                    lastHeartBeat: _storeStore2["default"].getState().lastHeartBeat
 	                });
 	            }
 	        }
@@ -20682,9 +20685,8 @@
 	                    _react2["default"].createElement(
 	                        "strong",
 	                        null,
-	                        "Heartbeat"
+	                        "Heartbeat: "
 	                    ),
-	                    " ",
 	                    this.state.beatsPerMinute || "awaiting data"
 	                ),
 	                _react2["default"].createElement(
@@ -20693,9 +20695,18 @@
 	                    _react2["default"].createElement(
 	                        "strong",
 	                        null,
-	                        "Panic status:"
+	                        "Last updated: "
 	                    ),
-	                    " ",
+	                    this.state.lastHeartBeat || "awaiting data"
+	                ),
+	                _react2["default"].createElement(
+	                    "p",
+	                    null,
+	                    _react2["default"].createElement(
+	                        "strong",
+	                        null,
+	                        "Panic status: "
+	                    ),
 	                    panicStatus
 	                ),
 	                _react2["default"].createElement("hr", null),
@@ -20766,7 +20777,6 @@
 	    }, {
 	        key: "render",
 	        value: function render() {
-	            var output = undefined;
 	            if (!this.state.hasLoaded) {
 	                return HomeTrackerInfo.getAwaitingDataMsg();
 	            } else {
@@ -23483,6 +23493,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+	module.exports = {"floorName":"_2EotZRbCRIBHuOFU-6Rf8w","roomName":"_3NCduS4qzUoKsRLKyigYrm","info-holder":"_287U1JuxqzBVyoFG1y-gN-","floor-select-btn":"_2p9shh0HToJCzrFAw3SgBS","panic-active":"OS_Bw5XLfO2x-eE_Y2UEg","pulsate":"_1NO4xprWVy-I3jfN8bHK0z"};
 
 /***/ },
 /* 222 */
@@ -23509,7 +23520,9 @@
 	    return {
 	        selectedFloor: selectedFloor(state.selectedFloor, action),
 	        currentLocation: currentLocation(state.currentLocation, action),
-	        panicStatus: panicStatus(state.panicStatus, action)
+	        panicStatus: panicStatus(state.panicStatus, action),
+	        heartBeat: heartBeat(state.heartBeat, action),
+	        lastHeartBeat: lastHeartBeat(state.lastHeartBeat, action)
 	    };
 	}
 
@@ -23543,6 +23556,30 @@
 
 	    switch (action.type) {
 	        case "PANICSTATUSUPDATED":
+	            return action.state;
+	        default:
+	            return state;
+	    }
+	}
+
+	function heartBeat() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+	    var action = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	    switch (action.type) {
+	        case "HEARTBEATUPDATED":
+	            return action.state;
+	        default:
+	            return state;
+	    }
+	}
+
+	function lastHeartBeat() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+	    var action = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	    switch (action.type) {
+	        case "LASTHEARTBEAT":
 	            return action.state;
 	        default:
 	            return state;
@@ -24149,9 +24186,13 @@
 	exports.selectedFloor = selectedFloor;
 	exports.currentLocation = currentLocation;
 	exports.panicStatus = panicStatus;
+	exports.heartBeat = heartBeat;
+	exports.lastHeartBeat = lastHeartBeat;
 	var SELECTEDFLOORUPDATED = "SELECTEDFLOORUPDATED";
 	var LOCATIONUPDATED = "LOCATIONUPDATED";
 	var PANICSTATUSUPDATED = "PANICSTATUSUPDATED";
+	var HEARTBEATUPDATED = "HEARTBEATUPDATED";
+	var LASTHEARTBEAT = "LASTHEARTBEAT";
 
 	function selectedFloor(data) {
 	    return { state: data, type: SELECTEDFLOORUPDATED };
@@ -24163,6 +24204,14 @@
 
 	function panicStatus(data) {
 	    return { state: data, type: PANICSTATUSUPDATED };
+	}
+
+	function heartBeat(data) {
+	    return { state: data, type: HEARTBEATUPDATED };
+	}
+
+	function lastHeartBeat(data) {
+	    return { state: data, type: LASTHEARTBEAT };
 	}
 
 /***/ },
@@ -24201,7 +24250,9 @@
 
 	var _storeStore2 = _interopRequireDefault(_storeStore);
 
-	//import FakeData from "./HomeTrackerFakeData";
+	var _HomeTrackerFakeData = __webpack_require__(236);
+
+	var _HomeTrackerFakeData2 = _interopRequireDefault(_HomeTrackerFakeData);
 
 	var HomeTracker = (function (_React$Component) {
 	    _inherits(HomeTracker, _React$Component);
@@ -24285,7 +24336,8 @@
 	                        "div",
 	                        { styleName: "home-map-holder" },
 	                        this.createRooms()
-	                    )
+	                    ),
+	                    _react2["default"].createElement(_HomeTrackerFakeData2["default"], { houseConfig: this.state.houseConfig })
 	                );
 	            }
 	        }
@@ -24302,9 +24354,132 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+	module.exports = {"home-map-holder":"sm9eC8es2fGlGzGWDdp9j","cube":"_2WdAFCrMm9Yhrzylx_Fmva","side":"_3RJAfhaNyPZkHOt3sc9Kgf","front":"_2Pg82Is1gyRy5uo1NgKusj","top":"_1YjaUnKpLulj9NQUGLxS8n","right":"_1uXCXVVXLcyMvCC9ngyF7K","left":"_1Cswfil-QNF9Bafw9BQsw7","bottom":"_25Wx_NYh2KN1wnYT6mVD2Z","back":"_1CvDKiovLspVpp-z8kYRDs"};
 
 /***/ },
 /* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactCssModules = __webpack_require__(158);
+
+	var _reactCssModules2 = _interopRequireDefault(_reactCssModules);
+
+	var _hometrackerStyles = __webpack_require__(235);
+
+	var _hometrackerStyles2 = _interopRequireDefault(_hometrackerStyles);
+
+	var _storeStore = __webpack_require__(223);
+
+	var _storeStore2 = _interopRequireDefault(_storeStore);
+
+	var _actionsHomeTrackerActions = __webpack_require__(233);
+
+	var FakeData = (function (_React$Component) {
+	    _inherits(FakeData, _React$Component);
+
+	    function FakeData(props) {
+	        _classCallCheck(this, FakeData);
+
+	        _get(Object.getPrototypeOf(FakeData.prototype), "constructor", this).call(this, props);
+	        this.state = {
+	            houseConfig: this.props.houseConfig,
+	            selectedFloor: _storeStore2["default"].getState().selectedFloor,
+	            currentLocation: _storeStore2["default"].getState().currentLocation,
+	            panicStatus: _storeStore2["default"].getState().panicStatus
+	        };
+	        _storeStore2["default"].subscribe(this.onStoreUpdate.bind(this));
+	        this.startFakingData();
+	    }
+
+	    _createClass(FakeData, [{
+	        key: "onStoreUpdate",
+	        value: function onStoreUpdate() {
+	            this.setState({
+	                selectedFloor: _storeStore2["default"].getState().selectedFloor,
+	                currentLocation: _storeStore2["default"].getState().currentLocation,
+	                panicStatus: _storeStore2["default"].getState().panicStatus
+	            });
+	        }
+	    }, {
+	        key: "startFakingData",
+	        value: function startFakingData() {
+	            var _this = this;
+
+	            var timer = setInterval(function () {
+
+	                var random = Math.floor(Math.random() * 100);
+	                if (random > 75) {
+	                    console.log("PANIC!!", random);
+	                    clearInterval(timer);
+	                    _storeStore2["default"].dispatch((0, _actionsHomeTrackerActions.panicStatus)(true));
+	                    setTimeout(function () {
+	                        _storeStore2["default"].dispatch((0, _actionsHomeTrackerActions.panicStatus)(false));
+	                        _this.startFakingData();
+	                    }, 6000);
+	                } else {
+
+	                    var currentFloor = Number(_this.state.currentLocation.currentFloor) || 0;
+	                    var currentRoom = Number(_this.state.currentLocation.currentRoom) || 0;
+	                    var maxRoomOnThisFloor = _this.state.houseConfig.floors[currentFloor].rooms.length - 1;
+	                    var maxFloor = _this.state.houseConfig.floors.length - 1;
+	                    var nextFloor = undefined,
+	                        nextRoom = undefined;
+
+	                    if (currentRoom + 1 > maxRoomOnThisFloor) {
+	                        nextRoom = 0;
+	                        if (currentFloor === maxFloor) {
+	                            nextFloor = 0;
+	                        } else {
+	                            nextFloor = currentFloor + 1;
+	                        }
+	                    } else {
+	                        nextRoom = currentRoom + 1;
+	                        nextFloor = currentFloor;
+	                    }
+
+	                    _storeStore2["default"].dispatch((0, _actionsHomeTrackerActions.selectedFloor)(nextFloor));
+	                    _storeStore2["default"].dispatch((0, _actionsHomeTrackerActions.currentLocation)({
+	                        currentRoom: nextRoom,
+	                        currentFloor: nextFloor
+	                    }));
+	                }
+	            }, 2500);
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            return false;
+	        }
+	    }]);
+
+	    return FakeData;
+	})(_react2["default"].Component);
+
+	exports["default"] = FakeData;
+	module.exports = exports["default"];
+
+/***/ },
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24369,6 +24544,18 @@
 	            console.log("hubProxy.on('message')");
 	            console.log(_arguments2);
 	            _this.onRoomUpdate(roomId);
+	        });
+
+	        hubProxy.on("heartRateUpdate", function (beats, time) {
+	            console.log("hubProxy.on('message')");
+	            console.log(_arguments2);
+	            var date = new Date(time * 1000);
+	            var hours = date.getHours();
+	            var minutes = "0" + date.getMinutes();
+	            var seconds = "0" + date.getSeconds();
+	            var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+	            _storeStore2["default"].dispatch((0, _actionsHomeTrackerActions.lastHeartBeat)(formattedTime));
+	            _storeStore2["default"].dispatch((0, _actionsHomeTrackerActions.heartBeat)(beats));
 	        });
 
 	        hubProxy.on("panic", function (message) {
@@ -24441,7 +24628,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports) {
 
 	'use strict';

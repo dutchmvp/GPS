@@ -24,6 +24,7 @@ class HomeTrackerInfo extends React.Component {
             hasLoaded : false,
             occupantLocation : location,
             beatsPerMinute : HomeTrackerStore.getState().heartBeat,
+            lastHeartBeat : HomeTrackerStore.getState().lastHeartBeat,
             selectedFloor : HomeTrackerStore.getState().selectedFloor
         };
         HomeTrackerStore.subscribe(this.onStoreUpdate.bind(this));
@@ -43,7 +44,8 @@ class HomeTrackerInfo extends React.Component {
                 occupantLocation : location,
                 selectedFloor : HomeTrackerStore.getState().selectedFloor,
                 isPaniced : HomeTrackerStore.getState().panicStatus,
-                beatsPerMinute : HomeTrackerStore.getState().heartBeat
+                beatsPerMinute : HomeTrackerStore.getState().heartBeat,
+                lastHeartBeat : HomeTrackerStore.getState().lastHeartBeat
             });
         }
     }
@@ -92,8 +94,9 @@ class HomeTrackerInfo extends React.Component {
                 { housePlan }
                 <hr />
                 <p><strong>Occupant location:</strong> { (this.state.occupantLocation || "awaiting positional data") }</p>
-                <p><strong>Heartbeat</strong> { (this.state.beatsPerMinute || "awaiting data") }</p>
-                <p><strong>Panic status:</strong> { panicStatus }</p>
+                <p><strong>Heartbeat: </strong>{ (this.state.beatsPerMinute || "awaiting data") }</p>
+                <p><strong>Last updated: </strong>{ this.state.lastHeartBeat || "awaiting data"}</p>
+                <p><strong>Panic status: </strong>{ panicStatus }</p>
                 <hr />
                 <h2>Floor Select</h2>
                 { this.createFloorSelectButtons() }
