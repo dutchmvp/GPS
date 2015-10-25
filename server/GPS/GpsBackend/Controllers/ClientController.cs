@@ -1,8 +1,8 @@
-﻿using System.Data.Entity.Validation;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Net;
 using System.Web.Http;
 using GpsBackend.Models;
+using GpsBackend.SignalR;
 
 namespace GpsBackend.Controllers
 {
@@ -47,6 +47,9 @@ namespace GpsBackend.Controllers
         [HttpPost]
         public IHttpActionResult PanicButton(PanicRequest panic)
         {
+            Debug.WriteLine("PANIC!");
+            var notifier = new Notifier();
+            notifier.Message("PANIC!");
             return Content(HttpStatusCode.OK, new { });
         }
 
@@ -54,6 +57,9 @@ namespace GpsBackend.Controllers
         [HttpPost]
         public IHttpActionResult PanicOver(PanicOverRequest panicOver)
         {
+            Debug.WriteLine("Don't worry - panic over!");
+            var notifier = new Notifier();
+            notifier.Message("Don't worry - panic over!");
             return Content(HttpStatusCode.OK, new { });
         }
     }

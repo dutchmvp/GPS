@@ -12,7 +12,7 @@ namespace GpsBackend
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-            GlobalConfiguration.Configuration.EnableCors(new WideOpenCorsPolicy());
+            // GlobalConfiguration.Configuration.EnableCors(new WideOpenCorsPolicy());
 
             // Web API routes
             config.MapHttpAttributeRoutes();
