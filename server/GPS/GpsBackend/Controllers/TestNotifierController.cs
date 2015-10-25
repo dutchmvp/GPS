@@ -1,5 +1,5 @@
 ﻿using System.Web.Http;
-using Clockwork;
+using GpsBackend.Providers;
 using GpsBackend.Repositories;
 using GpsBackend.SignalR;
 
@@ -55,19 +55,7 @@ namespace GpsBackend.Controllers
         [HttpGet]
         public IHttpActionResult Sms(int volunteerId)
         {
-            var volunteer = _volunteerRepository.Get(volunteerId);
-
-            if (volunteer != null)
-            {
-                var api = new API("cb19148b6a6266640003feb521e4a018dc8bddcb");
-                var result = api.Send(
-                    new SMS
-                    {
-                        To = volunteer.Mobile.Replace(" ", ""),
-                        Message = "Go help Granny Smith!"
-                    });
-            }
-
+            SmsProvider.SendSmsToVolunteer(volunteerId);
             return Ok();
         }
     }
